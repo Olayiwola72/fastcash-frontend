@@ -1,0 +1,18 @@
+aside {
+    .form-signin {
+        max-width: 400px;
+        padding: 1rem;
+
+        .header-signin{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        div.show-password{
+            button.show-password-btn {
+                border: var(--bs-border-width) solid var(--bs-border-color);
+            }
+        }
+    }
+}

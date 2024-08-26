@@ -1,0 +1,117 @@
+import React, { useEffect } from "react";
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
+import { Dispatch } from 'redux';
+import { useTranslation } from 'react-i18next';
+import { UpdateUserDispatchProps, UpdateUserOwnProps, UpdateUserProps, UpdateUserRequest } from './interface';
+import { useForm } from 'react-hook-form';
+import { setShowModal, updateUserStart } from "../../redux/user/user.actions";
+import MyModal from "../MyModal";
+import useFormPersist from "react-hook-form-persist";
+import { NavigateFunction } from "react-router-dom";
+import { useNavigateContext } from "../NavigateProvider";
+import ErrorHandler from '../ErrorHandler';
+import SuccessHandler from "../SuccessHandler";
+import './style.scss';
+
+const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, updateUserStart }) => {
+    const { t } = useTranslation();
+    const navigate = useNavigateContext();
+
+    useEffect(() => {
+        if(userData){
+            const {  email, name } = userData;
+
+            setValue('email', email)
+            setValue('name', name)
+        }
+    }, [userData]);
+
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
+
+    useFormPersist("form-account-settings", { watch, setValue });
+
+    const onSubmit = (request : UpdateUserRequest) => {
+        userData && updateUserStart(userData.id, request, navigate);
+    };
+
+    const handleShow = () => {
+        setShowModal();
+    };
+
+    return (
+        <aside className="container">
+            <div className="d-flex flex-row-reverse mt-5">
+                <MyModal userData={userData}>
+                    <h5>
+                        Are you sure you want to delete your account?
+                    </h5>
+                </MyModal>
+
+                <button 
+                    type="button" 
+                    className="btn btn-danger"
+                    onClick={() => handleShow()}
+                >
+                    Delete your account
+                </button>
+            </div>
+            <div className="form-transaction w-100">
+                <ErrorHandler className="mb-4"/>
+                <SuccessHandler className="mb-4"/>
+
+                <form onSubmit={handleSubmit((data) => onSubmit(data as UpdateUserRequest))}>
+                    <h1 className="h3 fw-normal text-center">Update Profile</h1>
+
+                    <div className="form-floating mt-3">
+                        <input 
+                            type="text"
+                            className={`form-control`} 
+                            id="email" 
+                            disabled
+                            {...register("email", {
+                                required: true
+                            })}
+                        />
+                        <label htmlFor="email">Email</label>
+                    </div>
+
+                    <div className="container-fluid p-0 d-flex align-items-center">
+                        <div className="form-floating position-relative w-100">
+                            <input 
+                                type="text"
+                                className={`form-control ${errors.name ? 'is-invalid' : ''}`} 
+                                id="name" 
+                                {...register("name", {
+                                    required: {
+                                        value: true,
+                                        message: 'required',
+                                    },
+                                    maxLength: 35,
+                                    validate: (value) => value !== userData?.name
+                                })}
+                            />
+                            <label htmlFor="name">Name *</label>
+                            {errors?.name?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Name'})}</div> }
+                            {errors?.name?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
+                            {errors?.name?.type === 'validate' && <div className="invalid-feedback">{t('NoChange', {field: 'Name'})}</div>}
+                        </div>
+                    </div>
+                    
+                    <button 
+                        className="btn btn-primary py-2 mt-3 w-100"
+                        type="submit"
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </aside>
+    )
+}
+
+const mapDispatchToProps : MapDispatchToPropsFunction<UpdateUserDispatchProps, UpdateUserOwnProps> = (dispatch: Dispatch) => ({
+    setShowModal: () => dispatch(setShowModal()),
+    updateUserStart: (userId : number, data : UpdateUserRequest, navigate : NavigateFunction) => dispatch(updateUserStart(userId, data, navigate))
+});
+  
+export default connect(null, mapDispatchToProps)(UpdateUser);

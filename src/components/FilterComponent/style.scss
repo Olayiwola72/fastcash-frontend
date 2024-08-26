@@ -1,0 +1,26 @@
+.filter-component{
+    .form {
+        position: relative;
+
+        .form-input {
+            height: 55px;
+            text-indent: 33px;
+            border-radius: 10px;
+        }
+        
+        .form-input:focus {
+            box-shadow: none;
+            border:none;
+        }
+
+        span.left-pan {
+            cursor: pointer;
+            position: absolute;
+            right: 17px;
+            top: 13px;
+            padding: 2px;
+            border-left: 1px solid #d1d5db;
+            padding-left: 13px; 
+        }
+    }
+}

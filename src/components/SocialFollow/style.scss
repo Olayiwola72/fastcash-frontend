@@ -1,0 +1,58 @@
+.social-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  
+    a.social {
+      margin: 0 1rem;
+      transition: transform 250ms;
+      display: inline-block;
+    }
+  
+    a.social:hover {
+      transform: translateY(-2px);
+    }
+  
+    a.youtube {
+      color: #eb3223;
+    }
+  
+    a.facebook {
+      color: #4968ad;
+    }
+  
+    a.linkedin {
+      color: #1c60cd;
+    }
+  
+    a.twitter {
+      color: #49a1eb;
+    }
+  
+    a.instagram,
+    a.github,
+    i.fa-file {
+      color: black;
+    }
+  
+    // Responsive styles
+    @media (max-width: 768px) {
+      a.social {
+        margin: 0 0.5rem;
+      }
+      i.fa-file {
+        font-size: 24px;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      a.social {
+        margin: 0.5rem;
+        font-size: 1.5rem;
+      }
+      i.fa-file {
+        font-size: 20px;
+      }
+    }
+  }
+  

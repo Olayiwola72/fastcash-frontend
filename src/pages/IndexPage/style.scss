@@ -1,0 +1,18 @@
+.index {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+  .image-container, .content-container {
+    flex: 1; // The flex: 1 property makes both the .image-container and .content-container take up equal space.
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .image-container, .content-container {
+      flex: none;
+    }
+  }
+}

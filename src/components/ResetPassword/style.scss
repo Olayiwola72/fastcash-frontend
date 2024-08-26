@@ -1,0 +1,18 @@
+.reset-password {
+    min-height: 69vh;
+}
+
+/* Adjust font size and padding for smaller screens */
+@media (max-width: 576px) {
+    .reset-password {
+        min-height: 59vh;
+        padding: 10px;
+    }
+}
+
+/* Increase font size and height for larger screens */
+@media (min-width: 1200px) {
+    .reset-password {
+        min-height: 69vh;
+    }
+}
