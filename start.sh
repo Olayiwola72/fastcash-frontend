@@ -23,7 +23,7 @@ start_frontend_server() {
 
 # Function to start the backend API
 start_backend_api() {
-    osascript -e 'tell application "Terminal" to do script "cd '$DIR' && cd ..; sh prod.sh"'
+    osascript -e 'tell application "Terminal" to do script "cd '$DIR' && cd ../../../; sh prod.sh"'
 }
 
 # Main script logic

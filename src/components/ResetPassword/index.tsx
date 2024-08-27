@@ -44,8 +44,8 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
     };
     
     return (
-        <aside className="content-container mt-5">
-            <div className="reset-password form-signin pt-5 w-100 m-auto">
+        <div className="content-container">
+            <div className="reset-password w-100 m-auto">
                 <ErrorHandler className="mb-4"/>
 
                 <form onSubmit={handleSubmit((data) => onSubmit(data as PasswordRequest))}>
@@ -126,7 +126,7 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
                     </button>
                 </form>
             </div>
-        </aside>
+        </div>
     )
 }
 
