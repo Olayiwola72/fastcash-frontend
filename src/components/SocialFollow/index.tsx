@@ -8,6 +8,7 @@ import {
   faLinkedin
 } from "@fortawesome/free-brands-svg-icons";
 import { GITHUB_URL, GOOGLE_DRIVE_CV_URL, LINKEDIN_URL, TWITTER_URL } from "../../constants/env";
+import cvSrc from '../../assets/cv.png';
 
 const SocialFollow : React.FC<SocialFollowProps> = ({ className }) => {
   return (
@@ -34,7 +35,12 @@ const SocialFollow : React.FC<SocialFollowProps> = ({ className }) => {
         target="_blank"
         className="envelope social"
         >
-          <i className="fa fa-file" style={{fontSize: '30px'}}></i>
+        <img 
+          src={cvSrc}
+          alt="Olayiwola Akinnagbe | Resume" 
+          width="30px"
+          loading="lazy"
+        />
       </a>
     </div>
   );  
