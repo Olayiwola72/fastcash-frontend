@@ -68,7 +68,7 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
           <button className="btn d-inline-flex align-items-center rounded border-0 collapsed">
             <Link to={transactionsPage} className="nav-link link-body-emphasis">
               <i className="fa fa-list bi pe-none me-2" aria-hidden="true"></i>
-              Transactions
+              Recent Transactions
             </Link>
           </button>
         </li>

@@ -1,6 +1,7 @@
 import { ItemsDataRow, TableColumnDataRow } from '../components/ExportActions/interface';
 import { jsPDF } from "jspdf";
 import autoTable, { CellInput, RowInput } from 'jspdf-autotable'
+import logoSrc from '../assets/logo512.png';
 
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 export const convertArrayOfObjectsToCSV = (columns: TableColumnDataRow, data: ItemsDataRow): string => {
@@ -54,10 +55,10 @@ export const exportPDF = (columns: TableColumnDataRow, data : ItemsDataRow, file
     const unit = "pt";
     const size = "A3"; // Use A1, A2, A3 or A4
     const orientation = "portrait"; // portrait or landscape 
-    const marginLeft = 40;
+    const totalPagesExp = '{total_pages_count_string}'
     
-    const doc = new jsPDF(orientation, unit, size);   
-    doc.setFontSize(15);
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(20)
 
     const headers = columns.map(column => column.name) as RowInput;       
     let rows : RowInput[] = [];
@@ -73,17 +74,42 @@ export const exportPDF = (columns: TableColumnDataRow, data : ItemsDataRow, file
       rows.push(row);
     });
 
-    doc.text(title, marginLeft, 40);
-
-      autoTable(doc, {
-        theme: 'striped',
-        styles: {
-          overflow: 'linebreak'
-        },
-        startY: 50,
-        head: [headers],
-        body: rows
+    autoTable(doc, {
+      theme: 'striped',
+      styles: {
+        overflow: 'linebreak'
+      },
+      startY: 94,
+      head: [headers],
+      body: rows,
+      willDrawPage: function (data) {
+        // Header
+        doc.setFontSize(15)
+        doc.setTextColor(40)
+        doc.addImage(logoSrc, 'PNG', data.settings.margin.left, 40, 40, 40)
+        doc.text(title, data.settings.margin.left + 50, 65);
+      },
+      didDrawPage: function (data) {
+        // Footer
+        let str = 'Page ' + (doc as any).internal.getNumberOfPages()
+        // Total page number plugin only available in jspdf v1.0+
+        if (typeof doc.putTotalPages === 'function') {
+          str = str + ' of ' + totalPagesExp
+        }
+        doc.setFontSize(10)
+  
+        // jsPDF 1.4+ uses getHeight, <1.4 uses .height
+        let pageSize = doc.internal.pageSize
+        var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight()
+        doc.text(str, data.settings.margin.left, pageHeight - 10)
+      },
+      margin: { top: 30 },
     });
 
-    doc.save(filename+".pdf");
+    // Total page number plugin only available in jspdf v1.0+
+    if (typeof doc.putTotalPages === 'function') {
+      doc.putTotalPages(totalPagesExp)
+    }
+
+    doc.save(`${filename}.pdf`);
 }

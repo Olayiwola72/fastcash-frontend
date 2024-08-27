@@ -104,7 +104,7 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
         <div className="recent-transactions">
             <DataTable
                 title="Recent Transactions"
-                actions={<ExportActions columns={columns} filteredItems={filteredItems} userData={userData} title="Recent Transactions" fileMarker="recent_transactions"/>}
+                actions={<ExportActions columns={columns} filteredItems={filteredItems} userData={userData} title="Recent Transactions Report" fileMarker="recent_transactions"/>}
                 pagination
                 columns={columns}
                 data={filteredItems}

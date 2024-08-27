@@ -92,7 +92,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ accountStatemen
         <div className="transaction-history mt-5">
             <DataTable
                 title="Transaction History"
-                actions={<ExportActions columns={columns} filteredItems={filteredItems} userData={userData} title="Transaction History" fileMarker="transaction_history"/>}
+                actions={<ExportActions columns={columns} filteredItems={filteredItems} userData={userData} title="Transaction History Report" fileMarker="transaction_history"/>}
                 pagination
                 columns={columns}
                 data={filteredItems}
