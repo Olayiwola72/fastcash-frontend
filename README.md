@@ -1,16 +1,20 @@
 # **Fast Cash Portfolio Project**
-**Fast Cash** is a cutting-edge digital banking solution designed to simplify and enhance financial management by providing users with seamless and automatic wallet creation for both local and international payments. This project demonstrates my expertise as a Senior Software Engineer 💻,, integrating robust backend and frontend technologies to deliver a comprehensive and responsive web application.
+
+**Fast Cash** is a cutting-edge digital banking solution designed to simplify and enhance financial management by providing users with seamless and automatic wallet creation for both local and international payments. This project demonstrates my expertise as a Senior Software Engineer 💻, integrating robust backend and frontend technologies to deliver a comprehensive and responsive web application.
+
 ## **🔭 Table of Contents**
-- [Project Overview](#project-overview)
-- [Tech Stack](#tech-stack)
+- [Project Overview](#-project-overview)
+- [Tech Stack](#-tech-stack)
 - [Getting Started](#getting-started)
-- [Usage Instructions](#usage-instructions)
-- [API Documentation](#api-documentation)
-- [Features](#features)
-- [Testing](#testing)
-- [Demo](#demo)
-- [Contributing](#contributing)
+- [Usage Instructions](#-usage-instructions)
+- [API Documentation](#-api-documentation)
+- [Features](#-features)
+- [Testing](#-testing)
+- [Demo](#-demo)
+- [Contributing](#-contributing)
 - [License](#license)
+- [Connect With Me](#-connect-with-me)
+
 ## **🌱 Project Overview**
 Fast Cash is a next-generation online bank that automates wallet creation and facilitates effortless transactions. Whether handling local or international payments, Fast Cash aims to provide users with a streamlined, secure, and user-friendly experience.
 
@@ -42,23 +46,28 @@ To set up the project locally:
 
 1. **✅ Clone the Repository:**
 
-   git clone https://github.com/Olayiwola72/fastcash-backend
+      ```sh
+      git clone https://github.com/Olayiwola72/fastcash-backend
 
 1. **✅ Submodule Initialization:**
 
    The frontend code is included as a submodule within the backend repository. Navigate to src/main/resources/client to interact with the front end.
 
-   git submodule update --init --recursive
+      ```sh 
+      git submodule update --init --recursive
 
 1. **✅ Install Dependencies and Start the Application:**
 
    The project leverages Vite & Maven to bundle both React and Spring Boot together. Use the provided script to install all dependencies and run the application.
 
+      ```sh
    ./prod.sh
 
 The application will be accessible at: <a href="http://localhost:8086/" target="_blank">http://localhost:8086/</a>
+
 ## **✅ Usage Instructions**
 Once the application is running, open your browser and navigate to <a href="http://localhost:8086/" target="_blank">http://localhost:8086/</a>. Create a user account and start exploring the features of Fast Cash.
+
 ## **📝 API Documentation**
 For detailed API information and testing, access the Swagger UI:
 
@@ -66,7 +75,7 @@ For detailed API information and testing, access the Swagger UI:
    <a href="http://localhost:8086/swagger-ui" target="_blank">http://localhost:8086/swagger-ui</a>
 </p>
 
-**✅ Features**
+## **✅ Features**
 
 Fast Cash is packed with a variety of features aimed at providing a comprehensive digital banking experience:
 
@@ -85,9 +94,12 @@ Fast Cash is packed with a variety of features aimed at providing a comprehensiv
 - **Responsive Web Design**
 
 ## **✅ Testing**
-Backend tests can be run from the root folder using the command:
+To run the tests locally:
 
-./mvnw test
+- **Backend Tests**
+
+   ```sh
+   ./mvnw test
 
 ## **✅ Demo**
 Check out the live  of Fast Cash here:
@@ -107,14 +119,15 @@ Check out the live  of Fast Cash here:
 
 ## **✅ Contributing**
 Contributions to this project are welcome. Please follow the standard GitHub fork, branch, and pull request workflow. Feel free to raise issues or feature requests to enhance this project.
+
 ## **License**
 N/A
 
-## 📈 GitHub Stats 
+## **📈 GitHub Stats**
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Olayiwola72&layout=compact)](https://github.com/Olayiwola72)
 
-### 🤝 Connect with me:
+## **🤝 Connect With Me**
 
 <a href="https://www.linkedin.com/in/olayiwola-akinnagbe-371686172/" target="_blank">
    <img 
