@@ -13,6 +13,7 @@ const Logo : React.FC<LogoProps> = ({ width, children, className, removeErrorMes
     return (
         <Link to={indexPage} className={`p-2 ${className}`} aria-label={`${APP_NAME} logo`} onClick={() => removeErrorMessage()}>
             <img 
+                role="presentation"
                 className="img-fluid" 
                 src={image} alt={`${APP_NAME} logo`} 
                 width={width}

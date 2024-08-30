@@ -51,7 +51,7 @@ const HomePage: React.FC<HomeProps> = ({ userData }) => {
             case changePasswordPage:
                 return <ChangePassword userData={userData} />;
             default:
-                return <ChartComponent transfers={transfers} />;
+                return <ChartComponent transfers={transfers} userData={userData} />;
                   
         }
     };

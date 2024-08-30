@@ -4,7 +4,7 @@ import { ChartData } from "chart.js";
 import LineChart from  '../LineChart';
 import './style.scss';
 
-const ChartComponent : React.FC<ChartComponentProps> = ({ transfers }) => {
+const ChartComponent : React.FC<ChartComponentProps> = ({ transfers, userData }) => {
     const chartData: ChartData<'line'> = {
         labels: transfers.map((transfer) => transfer.createdAtFormatted), 
         datasets: [
@@ -27,7 +27,15 @@ const ChartComponent : React.FC<ChartComponentProps> = ({ transfers }) => {
     return (
         <div className="chart-component">
             <div className="pt-3 pb-3 border-bottom">
-                <h1 className="h2 text-success">Welcome back!</h1>
+                <h1 className="h2 text-success">
+                    {
+                        userData && userData.givenName ?
+                            `Welcome back, ${userData.givenName}!`
+                        :
+                            'Welcome back!'
+                    }
+                </h1>
+
                 <small>Check the latest updates on your account...</small>
             </div>
 

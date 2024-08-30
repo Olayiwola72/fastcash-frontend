@@ -1,8 +1,9 @@
-import { MoneyTransfer } from "../../redux/user/interface";
+import { MoneyTransfer, User } from "../../redux/user/interface";
 
 export interface ChartComponentOwnProps {
     children?: React.ReactNode;
     transfers: MoneyTransfer[];
+    userData: User | undefined;
 }
 
 export interface ChartComponentStateProps {
