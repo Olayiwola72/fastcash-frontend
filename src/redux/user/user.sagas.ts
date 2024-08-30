@@ -446,7 +446,7 @@ export function* forgetPasswordStartSaga(action : ForgetPasswordStartAction){
     };
 
     try {
-        const { data } = yield axiosInstance(config);
+        const { data } = yield axiosNoInterceptor(config);
         yield put(forgotPasswordSuccess());
         toast.success(data?.successMessage)
     } catch (error) {

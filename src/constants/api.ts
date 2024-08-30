@@ -1,5 +1,5 @@
 export const API_URLS = {
-    CONFIG: '/v1/enums',
+    CONFIG: '/v1/config',
     AUTH_TOKEN: '/v1/auth/token',
     AUTH_REFRESH_TOKEN: '/v1/auth/token/refresh',
     AUTH_LOGIN: '/v1/auth/login',

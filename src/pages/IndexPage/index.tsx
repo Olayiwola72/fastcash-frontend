@@ -35,8 +35,8 @@ const IndexPage: React.FC<IndexProps> = ({ userData }) => {
                 </Suspense>
             ) : (
                 <Suspense fallback={<PreLoader isLoading={true} />}>
-                    <div className="index p-5 pb-0">
-                        <Section />
+                    <div className="index">
+                        <Section className="pt-5 px-5" />
                         {renderContent()}
                     </div>
                 </Suspense>
