@@ -7,7 +7,7 @@ import './style.scss';
 import PreLoader from "../../components/PreLoader";
 
 // Lazy-loaded components
-const ChartComponent = lazy(() => import('../../components/ChartComponent'));
+const DashboardComponent = lazy(() => import('../../components/DashboardComponent'));
 const TransactionHistory = lazy(() => import('../../components/TransactionHistory'));
 const RecentTransactions = lazy(() => import('../../components/RecentTransactions'));
 const OwnAccountTransfer = lazy(() => import('../../components/OwnAccountTransfer'));
@@ -51,7 +51,7 @@ const HomePage: React.FC<HomeProps> = ({ userData }) => {
             case changePasswordPage:
                 return <ChangePassword userData={userData} />;
             default:
-                return <ChartComponent transfers={transfers} userData={userData} />;
+                return <DashboardComponent transfers={transfers} userData={userData} />;
                   
         }
     };

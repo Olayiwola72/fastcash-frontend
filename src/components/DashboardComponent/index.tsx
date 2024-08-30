@@ -1,10 +1,10 @@
 import React from 'react';
-import { ChartComponentProps } from './interface';
+import { DashboardComponentProps } from './interface';
 import { ChartData } from "chart.js";
 import LineChart from  '../LineChart';
 import './style.scss';
 
-const ChartComponent : React.FC<ChartComponentProps> = ({ transfers, userData }) => {
+const DashboardComponent : React.FC<DashboardComponentProps> = ({ transfers, userData }) => {
     const chartData: ChartData<'line'> = {
         labels: transfers.map((transfer) => transfer.createdAtFormatted), 
         datasets: [
@@ -25,7 +25,7 @@ const ChartComponent : React.FC<ChartComponentProps> = ({ transfers, userData })
     };
    
     return (
-        <div className="chart-component">
+        <div className="dashboard-component">
             <div className="pt-3 pb-3 border-bottom">
                 <h1 className="h2 text-success">
                     {
@@ -44,4 +44,4 @@ const ChartComponent : React.FC<ChartComponentProps> = ({ transfers, userData })
     );
 };
   
-export default (ChartComponent);
+export default (DashboardComponent);
