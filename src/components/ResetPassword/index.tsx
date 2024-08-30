@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapDispatchToPropsFunction, connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { useTranslation } from 'react-i18next';
-import { forgotPasswordStart, removeErrorMessage, resetPasswordStart, signOutSuccess } from '../../redux/user/user.actions';
+import { forgotPasswordStart, removeErrorMessage, resetPasswordStart } from '../../redux/user/user.actions';
 import { ForgotPasswordRequest, PasswordRequest, ResetPasswordDispatchProps, ResetPasswordOwnProps, ResetPasswordProps, ResetPasswordRequest } from './interface';
 import ErrorHandler from '../ErrorHandler';
 import { useForm } from "react-hook-form";
