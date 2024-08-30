@@ -11,6 +11,7 @@
 - [Features](#-features)
 - [Testing](#-testing)
 - [Demo](#-demo)
+- [Docker Deployment](#-docker-deployment)
 - [Contributing](#-contributing)
 - [License](#license)
 - [Connect With Me](#-connect-with-me)
@@ -63,16 +64,16 @@ To set up the project locally:
       ```sh
    ./prod.sh
 
-The application will be accessible at: <a href="http://localhost:8086/" target="_blank">http://localhost:8086/</a>
+The application will be accessible at: <a href="https://fast-cash.onrender.com/ " target="_blank">https://fast-cash.onrender.com/ </a>
 
 ## **✅ Usage Instructions**
-Once the application is running, open your browser and navigate to <a href="http://localhost:8086/" target="_blank">http://localhost:8086/</a>. Create a user account and start exploring the features of Fast Cash.
+Once the application is running, open your browser and navigate to <a href="https://fast-cash.onrender.com/ " target="_blank">https://fast-cash.onrender.com/ </a>. Create a user account and start exploring the features of Fast Cash.
 
 ## **📝 API Documentation**
 For detailed API information and testing, access the Swagger UI:
 
 <p align="center">
-   <a href="http://localhost:8086/swagger-ui" target="_blank">http://localhost:8086/swagger-ui</a>
+   <a href="https://fast-cash.onrender.com/swagger-ui" target="_blank">https://fast-cash.onrender.com/swagger-ui</a>
 </p>
 
 ## **✅ Features**
@@ -105,7 +106,7 @@ To run the tests locally:
 Check out the live  of Fast Cash here:
 
 <p align="center">
-   <a href="http://fastcash.com/test" target="_blank">http://fastcash.com/test</a>
+   <a href="https://fast-cash.onrender.com/" target="_blank">https://fast-cash.onrender.com/</a>
 </p>
 
 <p align="center">
@@ -113,9 +114,37 @@ Check out the live  of Fast Cash here:
       width="500"
       height="300"
       alt="fast cash home"
-      src="https://private-user-images.githubusercontent.com/40915435/361814001-8fbbc93e-c226-4f9e-a429-aa425fb7e49f.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjQ3NjQwMDYsIm5iZiI6MTcyNDc2MzcwNiwicGF0aCI6Ii80MDkxNTQzNS8zNjE4MTQwMDEtOGZiYmM5M2UtYzIyNi00ZjllLWE0MjktYWE0MjVmYjdlNDlmLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MjclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODI3VDEzMDE0NlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTg2ZTNhZGY1NzBkNjQxMWIwYWZjOTMxZDdiOTlmNGU4MzkxZTNiMmVmZmFlNzIyMWRlYjFkY2IzM2ZlZjEyZDQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.WDYqWKKWe8kgc9C7SpoThCXNAKK3jRNvtqGHtyo9sZc"
+      src="https://github.com/Olayiwola72/my-profile/blob/main/fastcash.png"
    />
 </p>
+
+## **✅ Docker Deployment**
+Fast Cash can be deployed using Docker and Docker Compose, which simplifies the process of setting up and running the application in a containerized environment. Follow these instructions to get the application running using Docker.
+
+🛠 Prerequisites
+- **Docker: Install Docker**
+- **Docker Compose: Install Docker Compose**
+
+🚀 Quick Start
+1. **Clone the Repository:**
+
+   If you haven't already cloned the repository, do so with:
+
+      ```sh
+      git clone https://github.com/Olayiwola72/fastcash-backend
+
+1. **Build and Start the Application::**
+
+   Use Docker Compose to build and start the application. This will build the Docker images and start the containers defined in docker-compose.yml in the root directory.
+
+      ```sh 
+      docker-compose up --build
+
+   --build forces Docker Compose to rebuild the images. You can omit this flag if you don't need to rebuild.
+
+1. **📜 Notes:**
+
+   Adjust environment variables and ports as needed for your local development or production setup.
 
 ## **✅ Contributing**
 Contributions to this project are welcome. Please follow the standard GitHub fork, branch, and pull request workflow. Feel free to raise issues or feature requests to enhance this project.
