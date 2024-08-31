@@ -1,7 +1,7 @@
 import { TransferRequest, UserActionTypes } from './user.types';
 import { UserResponse, TokenResponse, ErrorDetails, User, FetchExchangeRateRequest } from'./interface';
 import { CredentialResponse } from '@react-oauth/google';
-import { handleFallbackError, handleAuthenticationError } from '../../utils/error';
+import { handleFallbackError, handleAuthenticationError } from '../../utils/apiErrorUtil';
 import { ManageOverdraftRequest } from '../../components/AccountFeatures/interface';
 import { UpdateUserRequest } from '../../components/UpdateUser/interface';
 import { ChangePasswordRequest } from '../../components/ChangePassword/interface';

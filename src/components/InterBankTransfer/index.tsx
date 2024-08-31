@@ -2,7 +2,6 @@ import React, { useEffect, lazy } from "react";
 import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Dispatch } from 'redux';
-import { useTranslation } from 'react-i18next';
 import { accountTransferStart, fetchExchangeRateStart } from '../../redux/user/user.actions';
 import { InterBankTransferProps, InterBankTransferOwnProps, InterBankTransferStateProps, InterBankTransferDispatchProps, InterBankTransferRequest, } from './interface';
 import { createStructuredSelector } from 'reselect';
@@ -16,18 +15,21 @@ import { TRANSACTION_TYPES } from "../../constants/api";
 import './style.scss';
 import { titles } from "../../pages/route";
 import { formatNumberNoOptions } from "../../utils/formatUtil";
+import { selectErrorDetailsState } from "../../redux/user/user.selectors";
 
 // Lazy-loaded components
 const OverdraftAlert = lazy(() => import("../OverdraftAlert"));
 const ErrorHandler = lazy(() => import("../ErrorHandler"));
+const FormError = lazy(() => import('../FormError'));
 
-const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userData, currencies, fetchExchangeRateStart, accountTransferStart }) => {
-    const { t } = useTranslation();
+const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userData, currencies, errorDetails, fetchExchangeRateStart, accountTransferStart }) => {
     const { search, pathname } = useLocation();
     const navigate = useNavigateContext();
 
-    const {register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
-        mode: 'all'
+    const {register, handleSubmit, watch, setValue, setError, formState: { errors, isValid } } = useForm({
+        mode: 'all',
+        criteriaMode: 'all',
+        shouldFocusError: true
     });
 
     useFormPersist("form-inter-bank", { watch, setValue });
@@ -74,6 +76,20 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
         accountTransferStart(request, navigate);
     };
 
+    useEffect(() => {
+        errorDetails && errorDetails.errors.map((errorDetail) => 
+            errorDetail && errorDetail.fieldName && 
+                setError(errorDetail.fieldName === "id" ? "creditAccount" : errorDetail.fieldName , {
+                    type: "custom",
+                    message: errorDetail.errorMessage
+                }
+                , {
+                    shouldFocus: false
+                }
+            )
+        );
+    }, [errorDetails, setError]);
+
     return (
         <aside className="container">
             <div className="form-transaction w-100">
@@ -109,7 +125,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                             ))}
                         </select>
                         <label htmlFor="debitAccount">Select Debit Account *</label>
-                        {errors?.debitAccount?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Debit Account'})}</div> }
+                        <FormError errors={errors} fieldName="debitAccount" field="Debit Account" />
                     </div>
 
                     <div className="form-floating">
@@ -139,7 +155,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                 })}
                             />
                             <label htmlFor="amount">Amount *</label>
-                            {errors?.amount?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Amount'})}</div> }
+                            <FormError errors={errors} fieldName="amount" field="Amount" />
                         </div>
                     </div>
 
@@ -164,7 +180,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                             )) }
                         </select>
                         <label htmlFor="creditCurrency">Select Credit Currency *</label>
-                        {errors?.creditCurrency?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Credit Currency'})}</div> }
+                        <FormError errors={errors} fieldName="creditCurrency" field="Credit Currency" />
                     </div>
 
                     <div className="container-fluid p-0 d-flex align-items-center">
@@ -181,11 +197,8 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                     maxLength: 35
                                 })}
                             />
-                            <label htmlFor="creditAccount">Credit Account</label>
-                            {errors?.creditAccount?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Credit Account'})}</div> }
-                            {errors?.creditAccount?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
-
                             <label htmlFor="creditAccount">Credit Account *</label>
+                            <FormError errors={errors} value="35" fieldName="creditAccount" field="Credit Account" />
                         </div>
                     </div>
 
@@ -242,8 +255,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                 })}
                             />
                             <label htmlFor="bankName">Bank Name *</label>
-                            {errors?.bankName?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Bank Name'})}</div> }
-                            {errors?.bankName?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
+                            <FormError errors={errors} value="35" fieldName="bankName" field="Bank Name" />
                         </div>
                     </div>
 
@@ -259,8 +271,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                 })}
                             />
                             <label htmlFor="accountHolderName">Account Holder Name *</label>
-                            {errors?.accountHolderName?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Account Holder Name'})}</div> }
-                            {errors?.accountHolderName?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
+                            <FormError errors={errors} value="35" fieldName="accountHolderName" field="Account Holder Name" />
                         </div>
                     </div>
 
@@ -276,14 +287,18 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                 })}
                             />
                             <label htmlFor="notes">Notes</label>
-                            {errors?.notes?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
+                            <FormError errors={errors} value="35" fieldName="notes" field="Notes" />
                         </div>
                     </div>
 
                     <button 
                         className="btn btn-primary py-2 mt-3 w-100"
                         type="submit"
-                        disabled={conversionRate === undefined && conversionAmount === undefined}
+                        disabled={
+                            !isValid
+                            || conversionRate === undefined 
+                            || conversionAmount === undefined
+                        }
                     >
                         Send Money
                     </button>
@@ -294,7 +309,8 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
 }
 
 const mapStateToProps: MapStateToProps<InterBankTransferStateProps, InterBankTransferOwnProps, RootState> = createStructuredSelector({
-    currencies: selectConfigCurrencies
+    currencies: selectConfigCurrencies,
+    errorDetails: selectErrorDetailsState
 });
 
 const mapDispatchToProps : MapDispatchToPropsFunction<InterBankTransferDispatchProps, InterBankTransferOwnProps> = (dispatch: Dispatch) => ({

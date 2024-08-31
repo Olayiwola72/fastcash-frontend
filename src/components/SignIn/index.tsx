@@ -18,7 +18,9 @@ const SignIn : React.FC<SignInProps> = ({ getAuthTokenStart, removeErrorMessage 
 
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({
-        mode: 'all'
+        mode: 'all',
+        criteriaMode: 'all',
+        shouldFocusError: true
     });
 
     const onSubmit = (request : SignInRequest) => {

@@ -2,7 +2,6 @@ import React, { useEffect, lazy } from "react";
 import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Dispatch } from 'redux';
-import { useTranslation } from 'react-i18next';
 import { accountTransferStart, fetchExchangeRateStart } from '../../redux/user/user.actions';
 import { OwnAccountTransferProps, OwnAccountTransferOwnProps, OwnAccountTransferStateProps, OwnAccountTransferDispatchProps, OwnAccountTransferRequest } from './interface';
 import { createStructuredSelector } from 'reselect';
@@ -16,17 +15,20 @@ import { TRANSACTION_TYPES } from "../../constants/api";
 import './style.scss';
 import { titles } from "../../pages/route";
 import { formatNumberNoOptions } from "../../utils/formatUtil";
+import { selectErrorDetailsState } from "../../redux/user/user.selectors";
 
 // Lazy-loaded components
 const OverdraftAlert = lazy(() => import("../OverdraftAlert"));
 const ErrorHandler = lazy(() => import("../ErrorHandler"));
+const FormError = lazy(() => import('../FormError'));
 
-const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userData, currencies, fetchExchangeRateStart, accountTransferStart }) => {
-    const { t } = useTranslation();
+const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userData, currencies, errorDetails, fetchExchangeRateStart, accountTransferStart }) => {
     const { search, pathname } = useLocation();
     const navigate = useNavigateContext();
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
-        mode: 'all'
+    const { register, handleSubmit, watch, setValue, setError, formState: { errors, isValid } } = useForm({
+        mode: 'all',
+        criteriaMode: 'all',
+        shouldFocusError: true
     });
        
     useFormPersist("form-own-account", { watch, setValue });
@@ -84,6 +86,20 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
         accountTransferStart(request, navigate);
     };
 
+    useEffect(() => {
+        errorDetails && errorDetails.errors.map((errorDetail) => 
+            errorDetail && errorDetail.fieldName && 
+                setError(errorDetail.fieldName === "id" ? "creditAccount" : errorDetail.fieldName , {
+                    type: "custom",
+                    message: errorDetail.errorMessage
+                }
+                , {
+                    shouldFocus: false
+                }
+            )
+        );
+    }, [errorDetails, setError]);
+
     return (
         <aside className="container">
             <div className="form-transaction w-100">
@@ -117,7 +133,7 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
                             ))}
                         </select>
                         <label htmlFor="debitAccount">Select Debit Account *</label>
-                        {errors?.debitAccount?.type === 'required' && <div className="invalid-feedback">{t('Required', { field: 'Debit Account' })}</div>}
+                        <FormError errors={errors} fieldName="debitAccount" field="Debit Account" />
                     </div>
 
                     <div className="form-floating">
@@ -147,7 +163,7 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
                                 })}
                             />
                             <label htmlFor="amount">Amount *</label>
-                            {errors?.amount?.type === 'required' && <div className="invalid-feedback">{t('Required', { field: 'Amount' })}</div>}
+                            <FormError errors={errors} fieldName="amount" field="Amount" />
                         </div>
                     </div>
 
@@ -171,7 +187,7 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
                             ))}
                         </select>
                         <label htmlFor="creditCurrency">Select Credit Currency *</label>
-                        {errors?.creditCurrency?.type === 'required' && <div className="invalid-feedback">{t('Required', { field: 'Credit Currency' })}</div>}
+                        <FormError errors={errors} fieldName="creditCurrency" field="Credit Currency" />
                     </div>
 
                     <div className="container-fluid p-0 d-flex align-items-center">
@@ -242,14 +258,18 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
                                 })}
                             />
                             <label htmlFor="notes">Notes</label>
-                            {errors?.notes?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', { value: '35' })}</div>}
+                            <FormError errors={errors} value="35" fieldName="notes" field="Notes" />
                         </div>
                     </div>
 
                     <button
                         className="btn btn-primary py-2 mt-3 w-100"
                         type="submit"
-                        disabled={conversionRate === undefined && conversionAmount === undefined}
+                        disabled={
+                            !isValid
+                            || conversionRate === undefined 
+                            || conversionAmount === undefined
+                        }
                     >
                         Send Money
                     </button>
@@ -260,7 +280,8 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
 }
 
 const mapStateToProps: MapStateToProps<OwnAccountTransferStateProps, OwnAccountTransferOwnProps, RootState> = createStructuredSelector({
-    currencies: selectConfigCurrencies
+    currencies: selectConfigCurrencies,
+    errorDetails: selectErrorDetailsState
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<OwnAccountTransferDispatchProps, OwnAccountTransferOwnProps> = (dispatch: Dispatch) => ({

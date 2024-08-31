@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { store } from '../redux/store';
 import { signInFailure } from '../redux/user/user.actions';
-import { handleFallbackError } from './error';
+import { handleFallbackError } from './apiErrorUtil';
 import i18n from './i18n';
 import { ErrorDetails } from '../redux/user/interface';
 import { API_ERROR_MESSAGES } from '../constants/api';

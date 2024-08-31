@@ -28,7 +28,9 @@ const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, update
     }, [userData]);
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
-        mode: 'all'
+        mode: 'all',
+        criteriaMode: 'all',
+        shouldFocusError: true
     });
 
     useFormPersist("form-account-settings", { watch, setValue });

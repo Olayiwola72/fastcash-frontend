@@ -27,7 +27,9 @@ const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswo
     }, [userData]);
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
-        mode: 'all'
+        mode: 'all',
+        criteriaMode: 'all',
+        shouldFocusError: true
     });
 
     useFormPersist("form-change-password", { watch, setValue });

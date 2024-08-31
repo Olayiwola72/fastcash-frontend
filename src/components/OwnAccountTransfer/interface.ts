@@ -1,5 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
-import { Account, FetchExchangeRateRequest, User } from "../../redux/user/interface";
+import { Account, ErrorDetails, FetchExchangeRateRequest, User } from "../../redux/user/interface";
 import { CurrencyResponse } from "../../redux/config/interface";
 import { TransactionType } from "../../constants/api";
 
@@ -23,6 +23,7 @@ export interface OwnAccountTransferRequest {
 
 export interface OwnAccountTransferStateProps {
     currencies: CurrencyResponse[] | undefined;
+    errorDetails: ErrorDetails | undefined;
 }
 
 export interface OwnAccountTransferDispatchProps {

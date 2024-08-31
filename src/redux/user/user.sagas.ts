@@ -6,7 +6,7 @@ import { googleLogout } from '@react-oauth/google';
 import { UserActionTypes, GetAuthTokenStartAction, AccountTransferStartAction, GoogleSignInStartAction, ManageOverdraftStartAction, ChangePasswordStartAction, UpdateUserStartAction, DisableUserStartAction, ForgetPasswordStartAction, ResetPasswordStartAction, FetchExchangeRateStartAction } from './user.types';
 import { getAuthTokenSuccess, getAuthTokenFailure, signInSuccess, signInFailure, signOutSuccess, signOutFailure, accountTransferSuccess , accountTransferFailure, manageOverdraftSuccess, manageOverdraftFailure, changePasswordSuccess, changePasswordFailure, updateUserSuccess, updateUserFailure, disableUserSuccess, disableUserFailure, forgotPasswordSuccess, forgotPasswordStartFailure, resetPasswordSuccess, resetPasswordStartFailure} from './user.actions';
 import { ErrorDetails, User, UserResponse } from './interface';
-import { isAxiosError, handleAxiosError, handleNonAxiosError } from '../../utils/error';
+import { isAxiosError, handleAxiosError, handleNonAxiosError } from '../../utils/apiErrorUtil';
 import { RootState } from '../store';
 import toast from 'react-hot-toast';
 import i18n from '../../utils/i18n';
