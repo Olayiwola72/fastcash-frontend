@@ -14,6 +14,7 @@ const resources = {
       "UnexpectedErrorOccured": "An unexpected error occurred.",
       "AuthenticationErrorOccured": "Your session has expired, please log in again to continue.",
       "SignedOutSuccess": "Signed out successfully",
+      "EqualTransactionAccount": "Credit account cannot be equal to debit account",
     }
   }
   // Add other languages here

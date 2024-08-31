@@ -22,7 +22,8 @@ export const API_ERROR_MESSAGES = {
 
 export const TRANSACTION_TYPES = {
     OWN_ACCOUNT: 'OWN_ACCOUNT',
-    INTER_BANK: 'INTER_BANK'
+    INTER_BANK: 'INTER_BANK',
+    ACCOUNT_TO_ACCOUNT: 'ACCOUNT_TO_ACCOUNT'
 } as const;
 
 export type TransactionType = typeof TRANSACTION_TYPES[keyof typeof TRANSACTION_TYPES];

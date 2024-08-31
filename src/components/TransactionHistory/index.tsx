@@ -2,8 +2,10 @@ import React, { useMemo, useState, lazy } from "react";
 import { AccountStatementDataRow, TransactionHistoryProps } from './interface';
 import DataTable, { TableColumn, ConditionalStyles } from 'react-data-table-component';
 import { Account } from "../../redux/user/interface";
-import { getFilteredItems } from "../../utils/filterUtils";
+import { getFilteredItems } from "../../utils/filterUtil";
 import './style.scss';
+import { formatNumber } from "../../utils/formatUtil";
+import { getPreferredLanguage } from "../../utils/languageUtil";
 
 // Lazy-loaded components
 const ExportActions = lazy(() => import("../ExportActions"));
@@ -43,7 +45,8 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ accountStatemen
         },
         {
             name: 'Closing Balance',
-            selector: row => `${row.balance} ${row.account.currency}`,
+            selector: row => 
+                formatNumber(getPreferredLanguage(userData), 'currency', row.account.currency, row.balance),
             sortable: true,
             right: true,
         },
@@ -67,13 +70,21 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ accountStatemen
         },
         {
             name: 'Amount',
-            selector: row => `${row.sign} ${row.direction == 'Receiving' ? row.totalCreditedAmount : row.totalDebitedAmount} ${row.direction == 'Receiving' ? row.creditCurrency : row.debitCurrency}`,
+            selector: row => `
+                ${row.sign} 
+                ${formatNumber(
+                    getPreferredLanguage(userData), 
+                    'currency', 
+                    row.direction == 'Receiving' ? row.creditCurrency : row.debitCurrency, 
+                    row.direction == 'Receiving' ? row.totalCreditedAmount : row.totalDebitedAmount
+                )}`,
             sortable: true,
             right: true,
         },
         {
             name: 'Charge Amount',
-            selector: row => `- ${row.chargeAmount} ${row.debitCurrency}`,
+            selector: row => 
+                formatNumber(getPreferredLanguage(userData), 'currency', row.debitCurrency, row.chargeAmount),
             sortable: true,
             right: true,
         },

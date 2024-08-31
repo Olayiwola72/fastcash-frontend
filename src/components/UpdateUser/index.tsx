@@ -12,6 +12,7 @@ import { useNavigateContext } from "../NavigateProvider";
 import ErrorHandler from '../ErrorHandler';
 import SuccessHandler from "../SuccessHandler";
 import './style.scss';
+import { profilePage, titles } from "../../pages/route";
 
 const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, updateUserStart }) => {
     const { t } = useTranslation();
@@ -26,7 +27,9 @@ const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, update
         }
     }, [userData]);
 
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+        mode: 'all'
+    });
 
     useFormPersist("form-account-settings", { watch, setValue });
 
@@ -39,28 +42,13 @@ const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, update
     };
 
     return (
-        <aside className="container">
-            <div className="d-flex flex-row-reverse mt-5">
-                <MyModal userData={userData}>
-                    <h5>
-                        Are you sure you want to delete your account?
-                    </h5>
-                </MyModal>
-
-                <button 
-                    type="button" 
-                    className="btn btn-danger"
-                    onClick={() => handleShow()}
-                >
-                    Delete your account
-                </button>
-            </div>
-            <div className="form-transaction w-100">
+        <aside className="container mt-5">
+            <div className="form-transaction w-100 mt-5">
                 <ErrorHandler className="mb-4"/>
                 <SuccessHandler className="mb-4"/>
 
                 <form onSubmit={handleSubmit((data) => onSubmit(data as UpdateUserRequest))}>
-                    <h1 className="h3 fw-normal text-center">Update Profile</h1>
+                    <h1 className="h3 fw-normal text-center">{titles[profilePage]}</h1>
 
                     <div className="form-floating mt-3">
                         <input 
@@ -104,6 +92,22 @@ const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, update
                         Submit
                     </button>
                 </form>
+            </div>
+            <hr className="mt-5 mb-5"/>
+            <div className="mt-5">
+                <MyModal userData={userData}>
+                    <h5>
+                        Are you sure you want to delete your account?
+                    </h5>
+                </MyModal>
+
+                <button 
+                    type="button" 
+                    className="btn btn-danger"
+                    onClick={() => handleShow()}
+                >
+                    Delete your account
+                </button>
             </div>
         </aside>
     )

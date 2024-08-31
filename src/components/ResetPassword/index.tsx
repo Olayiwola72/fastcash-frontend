@@ -28,7 +28,7 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
     }, [currentUrl, setToken]);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm({
-        mode: 'onChange'
+        mode: 'all'
     });
 
     const password = watch("password");

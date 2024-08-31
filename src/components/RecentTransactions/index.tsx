@@ -2,8 +2,10 @@ import React, { useMemo, useState, lazy } from "react";
 import { MoneyTransferDataRow, RecentTransactionsProps } from './interface';
 import DataTable, { TableColumn, ConditionalStyles } from 'react-data-table-component';
 import { Account } from "../../redux/user/interface";
-import { getFilteredItems } from "../../utils/filterUtils";
+import { getFilteredItems } from "../../utils/filterUtil";
 import './style.scss';
+import { formatNumber } from "../../utils/formatUtil";
+import { getPreferredLanguage } from "../../utils/languageUtil";
 
 // Lazy-loaded components
 const ExportActions = lazy(() => import("../ExportActions"));
@@ -42,9 +44,11 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
         },
         {
             name: 'Current Balance',
-            selector: row => `${row.debitAccount.balance} ${row.debitAccount.currency}`,
+            selector: row => 
+                formatNumber(getPreferredLanguage(userData), 'currency', row.debitAccount.currency, row.debitAccount.balance),
             sortable: true,
             right: true,
+            allowOverflow: true,
         },
         {
             name: 'Direction',
@@ -66,9 +70,13 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
         },
         {
             name: 'Debit Amount',
-            selector: row => `${row.sign} ${row.totalDebitedAmount} ${row.debitCurrency}`,
+            selector: row => 
+                `${row.sign}
+                ${formatNumber(getPreferredLanguage(userData), 'currency', row.debitCurrency, row.totalDebitedAmount)}
+                `,
             sortable: true,
             right: true,
+            allowOverflow: true,
         },
         {
             name: 'Credit Account',
@@ -78,16 +86,23 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
         },
         {
             name: 'Credit Amount',
-            selector: row => `${row.sign} ${row.totalCreditedAmount} ${row.creditCurrency}`,
+            selector: row => 
+                `${row.sign}
+                ${formatNumber(getPreferredLanguage(userData), 'currency', row.creditCurrency, row.totalCreditedAmount)}
+                `,
             sortable: true,
             right: true,
             allowOverflow: true
         },
         {
             name: 'Charge Amount',
-            selector: row => `${row.sign} ${row.chargeAmount} ${row.debitCurrency}`,
+            selector: row => 
+                `${row.sign}
+                ${formatNumber(getPreferredLanguage(userData), 'currency', row.debitCurrency, row.chargeAmount)}
+                `,
             sortable: true,
             right: true,
+            allowOverflow: true
         },
     ];
 

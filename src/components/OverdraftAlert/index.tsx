@@ -11,7 +11,7 @@ const OverdraftAlert : React.FC<OverdraftAlertProps> = ({ account, setShowModal 
   return (
     <React.Fragment>
       {
-        account && account.allowOverdraft ?       
+        account ?       
           <div className="text-danger mb-3" role="alert">
             <MyModal currentAccount={account}>
               <h5>
@@ -20,7 +20,9 @@ const OverdraftAlert : React.FC<OverdraftAlertProps> = ({ account, setShowModal 
             </MyModal>
             
             Overdraft is enabled on this debit account.&nbsp;
-            <Link to="#" onClick={() => setShowModal()} className="alert-link">Click here to disable.</Link>
+            <Link to="#" onClick={() => setShowModal()} className="alert-link">
+              Click here to {account.allowOverdraft ? "disable" : "enable"}.
+            </Link>
           </div>
       : '' }
     </React.Fragment>

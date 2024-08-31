@@ -1,10 +1,11 @@
 import { NavigateFunction } from "react-router-dom";
-import { Account, FetchExchangeRateRequest } from "../../redux/user/interface";
+import { Account, FetchExchangeRateRequest, User } from "../../redux/user/interface";
 import { CurrencyResponse } from "../../redux/config/interface";
 import { TransactionType } from "../../constants/api";
 
 export interface OwnAccountTransferOwnProps {
     accounts : Account[];
+    userData: User | undefined;
     children?: React.ReactNode;
 }
 

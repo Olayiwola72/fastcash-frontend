@@ -8,7 +8,7 @@ import { getConfigSuccess } from '../../redux/config/config.actions';
 import { getUserSuccess } from '../../redux/user/user.actions';
 import { useQueries, UseQueryOptions, UseQueryResult } from 'react-query';
 import { fetchUserDetails } from '../../redux/user/user.api';
-import { accountsPage, changePasswordPage, homePage, indexPage, interTransferPage, ownAccountTransferPage, profilePage, resetPasswordPage, transactionsHistoryPage, transactionsPage } from '../route';
+import { accountsPage, changePasswordPage, homePage, indexPage, interTransferPage, intraTransferPage, ownAccountTransferPage, profilePage, resetPasswordPage, transactionsHistoryPage, transactionsPage } from '../route';
 import Header from "../../components/Header";
 import PreLoader from "../../components/PreLoader";
 import { Config } from "../../redux/config/interface";
@@ -112,6 +112,7 @@ const Layout: React.FC<LayoutProps> = ({
                                 <Route path="/" element={<IndexPage />} />
                                 <Route path={homePage} element={<HomePage userData={userData} />} />
                                 <Route path={ownAccountTransferPage} element={<HomePage userData={userData} />} />
+                                <Route path={intraTransferPage} element={<HomePage userData={userData} />} />
                                 <Route path={interTransferPage} element={<HomePage userData={userData} />} />
                                 <Route path={transactionsHistoryPage} element={<HomePage userData={userData} />} />
                                 <Route path={accountsPage} element={<HomePage userData={userData} />} />

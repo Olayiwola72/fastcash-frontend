@@ -36,6 +36,7 @@ export interface User {
     name : string | null,
     createdAt: string,
     defaultPassword: boolean,
+    preferredLanguage: string,
     deletedAt: string | null,
     lastLoginDate: string | null,
 }

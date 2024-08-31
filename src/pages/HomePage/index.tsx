@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, lazy, Suspense } from "react";
 import { HomeProps } from './interface';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ownAccountTransferPage, interTransferPage, transactionsPage, transactionsHistoryPage, accountsPage, profilePage, changePasswordPage, indexPage } from '../route';
+import { ownAccountTransferPage, interTransferPage, transactionsPage, transactionsHistoryPage, accountsPage, profilePage, changePasswordPage, indexPage, intraTransferPage } from '../route';
 import SideBar from "../../components/SideBar";
 import './style.scss';
 import PreLoader from "../../components/PreLoader";
@@ -11,6 +11,7 @@ const DashboardComponent = lazy(() => import('../../components/DashboardComponen
 const TransactionHistory = lazy(() => import('../../components/TransactionHistory'));
 const RecentTransactions = lazy(() => import('../../components/RecentTransactions'));
 const OwnAccountTransfer = lazy(() => import('../../components/OwnAccountTransfer'));
+const IntraAccountTransfer = lazy(() => import('../../components/IntraAccountTransfer'));
 const InterBankTransfer = lazy(() => import('../../components/InterBankTransfer'));
 const AccountFeatures = lazy(() => import('../../components/AccountFeatures'));
 const UpdateUser = lazy(() => import('../../components/UpdateUser'));
@@ -39,9 +40,11 @@ const HomePage: React.FC<HomeProps> = ({ userData }) => {
             case transactionsHistoryPage:
                 return <TransactionHistory userData={userData} accounts={accounts} accountStatements={accountStatements} />
             case ownAccountTransferPage:
-                return <OwnAccountTransfer accounts={accounts}/>;
+                return <OwnAccountTransfer userData={userData}  accounts={accounts}/>;
+            case intraTransferPage:
+                return <IntraAccountTransfer userData={userData}  accounts={accounts}/>;
             case interTransferPage:
-                return <InterBankTransfer accounts={accounts} />;
+                return <InterBankTransfer userData={userData}  accounts={accounts} />;
             case transactionsPage:
                 return <RecentTransactions transfers={transfers} userData={userData}  accounts={accounts} />;
             case accountsPage:
@@ -59,11 +62,8 @@ const HomePage: React.FC<HomeProps> = ({ userData }) => {
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="border side-bar col-md-3 col-lg-2">
-                    <SideBar />
-                </div>
-
-
+                <SideBar />
+                
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-5">
                     <Suspense fallback={<PreLoader isLoading={true} />}>
                         {renderContent()}

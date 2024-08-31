@@ -29,9 +29,9 @@ const SubHeaderComponent: React.FC<SubHeaderComponentProps> = ({
 
         return (
             <React.Fragment>
-                <div className="btn-group" role="group" aria-label="Basic example">
+                <div className="btn-group d-flex flex-wrap mb-3" role="group" aria-label="select accounts">
                     <button type="button" 
-                      className={`btn btn-outline-primary ${filterAccount === undefined ? 'active' : ''}`}
+                      className={`btn btn-sm btn-lg btn-outline-primary ${filterAccount === undefined ? 'active' : ''} flex-grow-1`}
                       onClick={() => handleClearAccount()}
                     >
                         All
@@ -41,7 +41,7 @@ const SubHeaderComponent: React.FC<SubHeaderComponentProps> = ({
                       <button 
                           key={account.accountNumber}
                           type="button" 
-                          className={`btn btn-outline-primary ${filterAccount?.accountNumber === account.accountNumber ? 'active' : ''}`}
+                          className={`btn btn-sm btn-lg btn-outline-primary ${filterAccount?.accountNumber === account.accountNumber ? 'active' : ''} flex-grow-1`}
                           onClick={() => setFilterAccount(account)}
                       >
                           {account.accountNumber} {account.currency}

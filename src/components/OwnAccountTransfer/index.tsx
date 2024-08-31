@@ -14,17 +14,21 @@ import { useNavigateContext } from "../NavigateProvider";
 import { FetchExchangeRateRequest } from "../../redux/user/interface";
 import { TRANSACTION_TYPES } from "../../constants/api";
 import './style.scss';
+import { titles } from "../../pages/route";
+import { formatNumberNoOptions } from "../../utils/formatUtil";
 
 // Lazy-loaded components
 const OverdraftAlert = lazy(() => import("../OverdraftAlert"));
 const ErrorHandler = lazy(() => import("../ErrorHandler"));
 
-const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, currencies, fetchExchangeRateStart, accountTransferStart }) => {
+const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userData, currencies, fetchExchangeRateStart, accountTransferStart }) => {
     const { t } = useTranslation();
-    const { search } = useLocation();
+    const { search, pathname } = useLocation();
     const navigate = useNavigateContext();
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
-    
+    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+        mode: 'all'
+    });
+       
     useFormPersist("form-own-account", { watch, setValue });
 
     useEffect(() => {
@@ -41,6 +45,8 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, curre
     const creditCurrency: string = watch('creditCurrency');
     const amount : number = watch('amount');
     const debitCurrency : string = watch('debitCurrency');
+    const conversionRate : number = watch('conversionRate');
+    const conversionAmount : number = watch('conversionAmount');
 
     useEffect(() => {
         if (debitAccount) {
@@ -84,7 +90,7 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, curre
                 <ErrorHandler className="mb-4" />
                 
                 <form onSubmit={handleSubmit((data) => onSubmit(data as OwnAccountTransferRequest))}>
-                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">Own Account Transfer</h1>
+                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">{titles[pathname]}</h1>
                     
                     {
                         debitAccount ? 
@@ -188,10 +194,13 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, curre
                             <div className="container-fluid p-0 d-flex align-items-center">
                                 <div className="form-floating position-relative w-100">
                                     <input
-                                        type="number"
+                                        type="text"
                                         className={`form-control`}
                                         id="conversionRate"
                                         disabled
+                                        value={
+                                            formatNumberNoOptions(userData?.preferredLanguage, conversionRate)
+                                        }
                                         {...register("conversionRate", {
                                             required: true
                                         })}
@@ -203,9 +212,12 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, curre
                             <div className="container-fluid p-0 d-flex align-items-center">
                                 <div className="form-floating position-relative w-100">
                                     <input
-                                        type="number"
+                                        type="text"
                                         className={`form-control`}
                                         id="conversionAmount"
+                                        value={
+                                            formatNumberNoOptions(userData?.preferredLanguage, conversionAmount)
+                                        }
                                         disabled
                                         {...register("conversionAmount", {
                                             required: true
@@ -237,6 +249,7 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, curre
                     <button
                         className="btn btn-primary py-2 mt-3 w-100"
                         type="submit"
+                        disabled={conversionRate === undefined && conversionAmount === undefined}
                     >
                         Send Money
                     </button>

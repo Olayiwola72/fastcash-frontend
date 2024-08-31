@@ -3,7 +3,7 @@ import { SideBarDispatchProps, SideBarOwnProps, SideBarProps } from './interface
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Dispatch } from 'redux';
 import { signOutStart, removeSuccessMessage, removeErrorMessage } from "../../redux/user/user.actions";
-import { indexPage, homePage, ownAccountTransferPage, interTransferPage, transactionsPage, accountsPage, profilePage, transactionsHistoryPage, changePasswordPage } from '../../pages/route';
+import { indexPage, homePage, ownAccountTransferPage, interTransferPage, transactionsPage, accountsPage, profilePage, transactionsHistoryPage, changePasswordPage, intraTransferPage, titles } from '../../pages/route';
 import { Link } from 'react-router-dom';
 import './style.scss';
 import Logo from "../Logo";
@@ -16,7 +16,8 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
   }
 
   return (
-    <div className="p-3">
+    <div className="side-bar col-md-3 col-lg-2 border h-100">
+      <div className="m-3">
       <Logo width="50px" className="fs-5 fw-semibold text-success d-flex align-items-center mb-2 link-body-emphasis text-decoration-none border-bottom">
         {APP_NAME}
       </Logo>
@@ -33,7 +34,7 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
           <button className="btn d-inline-flex align-items-center rounded border-0 collapsed">
             <Link to={transactionsHistoryPage} className="nav-link link-body-emphasis">
               <i className="fa fa-history bi pe-none me-2" aria-hidden="true"></i>
-              Transaction History
+              {titles[transactionsHistoryPage]}
             </Link>
           </button>
         </li>
@@ -41,7 +42,7 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
           <button className="btn d-inline-flex align-items-center rounded border-0 collapsed">
             <Link to={accountsPage} className="nav-link link-body-emphasis">
               <i className="fa fa-google-wallet bi pe-none me-2" aria-hidden="true"></i>
-              Wallets
+              {titles[accountsPage]}
             </Link>
           </button>
         </li>
@@ -53,12 +54,17 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <Link to={ownAccountTransferPage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
-                  Own Account Transfer
+                  {titles[ownAccountTransferPage]}
+                </Link>
+              </li>
+              <li>
+                <Link to={intraTransferPage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
+                  {titles[intraTransferPage]}
                 </Link>
               </li>
               <li>
                 <Link to={interTransferPage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
-                  Inter Bank Transfer
+                  {titles[interTransferPage]}
                 </Link>
               </li>
             </ul>
@@ -68,7 +74,7 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
           <button className="btn d-inline-flex align-items-center rounded border-0 collapsed">
             <Link to={transactionsPage} className="nav-link link-body-emphasis">
               <i className="fa fa-list bi pe-none me-2" aria-hidden="true"></i>
-              Recent Transactions
+              {titles[transactionsPage]}
             </Link>
           </button>
         </li>
@@ -81,12 +87,12 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <Link to={changePasswordPage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
-                  Change Password
+                  {titles[changePasswordPage]}
                 </Link>
               </li>
               <li>
                 <Link to={profilePage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
-                  Update Profile
+                  {titles[profilePage]}
                 </Link>
               </li>
             </ul>
@@ -102,6 +108,7 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
           </button>
         </li>
       </ul>
+    </div>
     </div>
   );  
 }

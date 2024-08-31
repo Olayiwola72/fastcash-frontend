@@ -313,11 +313,11 @@ export function* manageOverdraftSaga(action : ManageOverdraftStartAction){
         const { data } = yield call(callApiWithRefreshToken, axiosInstance, config);
 
         if(data){
+            yield put(manageOverdraftSuccess(data as UserResponse));
+
             toast.success(data?.successMessage, {
                 position: 'top-right',
             })
-
-            yield put(manageOverdraftSuccess(data as UserResponse));
         }
     } catch (error) {
         let errors: ErrorDetails;

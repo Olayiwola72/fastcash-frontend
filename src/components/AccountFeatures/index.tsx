@@ -8,6 +8,8 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Account } from "../../redux/user/interface";
 import { interTransferPage, ownAccountTransferPage } from "../../pages/route";
+import { formatNumber } from "../../utils/formatUtil";
+import { getPreferredLanguage } from "../../utils/languageUtil";
 
 const AccountFeatures: React.FC<AccountFeaturesProps> = ({ accounts, setShowModal, userData }) => {
     const [currentAccount, setCurrentAccount] = useState<Account>();
@@ -41,10 +43,9 @@ const AccountFeatures: React.FC<AccountFeaturesProps> = ({ accounts, setShowModa
                                 <h3 className="card-title">Wallet Number: {account.accountNumber}</h3>
                                 {userData && <p><strong>Name:</strong> {userData.name}</p>}
                                 <p><strong>Current Balance:</strong> 
-                                    {new Intl.NumberFormat('en-us', {
-                                        style: 'currency',
-                                        currency: account.currency,
-                                    }).format(account.balance)}
+                                    {
+                                        formatNumber(getPreferredLanguage(userData), 'currency', account.currency, account.balance)
+                                    }
                                 </p>
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <div>

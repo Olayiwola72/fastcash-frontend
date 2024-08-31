@@ -12,6 +12,7 @@ import { useNavigateContext } from "../NavigateProvider";
 import ErrorHandler from '../ErrorHandler';
 import TogglePassword from "../TogglePassword";
 import './style.scss';
+import { changePasswordPage, titles } from "../../pages/route";
 
 const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswordStart }) => {
     const { t } = useTranslation();
@@ -25,7 +26,9 @@ const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswo
         }
     }, [userData]);
 
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+        mode: 'all'
+    });
 
     useFormPersist("form-change-password", { watch, setValue });
 
@@ -54,7 +57,7 @@ const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswo
                             userData.defaultPassword ?
                                 <h4 className="h4 fw-normal text-center">Link your account with a password</h4>
                             :
-                                <h4 className="h4 fw-normal text-center">Change Password</h4>
+                                <h4 className="h4 fw-normal text-center">{titles[changePasswordPage]}</h4>
                     : ''}
 
                     <div className="form-floating mt-3">

@@ -4,7 +4,6 @@ import { RootState } from '../../redux/store';
 import { Dispatch } from 'redux';
 import { useTranslation } from 'react-i18next';
 import { accountTransferStart, fetchExchangeRateStart } from '../../redux/user/user.actions';
-import { InterBankTransferProps, InterBankTransferOwnProps, InterBankTransferStateProps, InterBankTransferDispatchProps, InterBankTransferRequest, } from './interface';
 import { createStructuredSelector } from 'reselect';
 import { selectConfigCurrencies } from "../../redux/config/config.selectors";
 import { useForm } from 'react-hook-form';
@@ -14,6 +13,7 @@ import { useNavigateContext } from "../NavigateProvider";
 import { FetchExchangeRateRequest } from "../../redux/user/interface";
 import { TRANSACTION_TYPES } from "../../constants/api";
 import './style.scss';
+import { IntraBankTransferDispatchProps, IntraBankTransferOwnProps, IntraBankTransferProps, IntraBankTransferRequest, IntraBankTransferStateProps } from "./interface";
 import { titles } from "../../pages/route";
 import { formatNumberNoOptions } from "../../utils/formatUtil";
 
@@ -21,24 +21,23 @@ import { formatNumberNoOptions } from "../../utils/formatUtil";
 const OverdraftAlert = lazy(() => import("../OverdraftAlert"));
 const ErrorHandler = lazy(() => import("../ErrorHandler"));
 
-const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userData, currencies, fetchExchangeRateStart, accountTransferStart }) => {
+const OwnAccountTransfer: React.FC<IntraBankTransferProps> = ({ accounts, userData, currencies, fetchExchangeRateStart, accountTransferStart }) => {
     const { t } = useTranslation();
     const { search, pathname } = useLocation();
     const navigate = useNavigateContext();
-
-    const {register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
         mode: 'all'
     });
-
-    useFormPersist("form-inter-bank", { watch, setValue });
+    
+    useFormPersist("form-own-account", { watch, setValue });
 
     useEffect(() => {
         const params = new URLSearchParams(search);
         const account = params.get('account');
         const currency = params.get('currency');
-        if(account){
-            setValue('debitAccount', account)
-            setValue('debitCurrency', currency)
+        if (account) {
+            setValue('debitAccount', account);
+            setValue('debitCurrency', currency);
         }
     }, [search, setValue]);
 
@@ -48,7 +47,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
     const debitCurrency : string = watch('debitCurrency');
     const conversionRate : number = watch('conversionRate');
     const conversionAmount : number = watch('conversionAmount');
-
+    
     useEffect(() => {
         if (debitAccount) {
             const debitAccountCurrency = accounts.find(account => account.accountNumber == debitAccount)?.currency;
@@ -68,40 +67,37 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
             });
         }
     }, [amount, debitCurrency, creditCurrency, setValue]);
-
-    const onSubmit = (request : InterBankTransferRequest) => {
-        request.transactionType = TRANSACTION_TYPES.INTER_BANK;
+    
+    const onSubmit = (request: IntraBankTransferRequest) => {
+        request.transactionType = TRANSACTION_TYPES.ACCOUNT_TO_ACCOUNT;
         accountTransferStart(request, navigate);
     };
 
     return (
         <aside className="container">
             <div className="form-transaction w-100">
-                <ErrorHandler className="mb-4"/>
+                <ErrorHandler className="mb-4" />
                 
-                <form onSubmit={handleSubmit((data) => onSubmit(data as InterBankTransferRequest))}>
+                <form onSubmit={handleSubmit((data) => onSubmit(data as IntraBankTransferRequest))}>
                     <h1 className="h3 mt-5 mb-3 fw-normal text-center">{titles[pathname]}</h1>
-
-                    {
-                        debitAccount ? 
-                            <OverdraftAlert account={accounts.find((account) => account.accountNumber == debitAccount)}/>
-                        :''
+                    
+                    { debitAccount ? 
+                        <OverdraftAlert account={accounts.find((account) => account.accountNumber == debitAccount)}/>
+                    :''
                     }
 
                     <div className="form-floating">
                         <select
-                            className={`form-control ${errors.debitAccount ? 'is-invalid' : ''}`} 
+                            className={`form-control ${errors.debitAccount ? 'is-invalid' : ''}`}
                             id="debitAccount"
                             {...register("debitAccount", {
                                 required: {
                                     value: true,
                                     message: 'required',
-                                },
+                                }
                             })}
                         >
-                            <option value=''>
-                                Select an account
-                            </option>
+                            <option value=''>Select an account</option>
                             {accounts.map((account) => (
                                 <option key={account.accountNumber} value={account.accountNumber}>
                                     {account.accountNumber} ({account.balance} {account.currency})
@@ -109,14 +105,14 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                             ))}
                         </select>
                         <label htmlFor="debitAccount">Select Debit Account *</label>
-                        {errors?.debitAccount?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Debit Account'})}</div> }
+                        {errors?.debitAccount?.type === 'required' && <div className="invalid-feedback">{t('Required', { field: 'Debit Account' })}</div>}
                     </div>
 
                     <div className="form-floating">
-                        <input 
+                        <input
                             type="text"
-                            className={`form-control`} 
-                            id="debitCurrency" 
+                            className={`form-control`}
+                            id="debitCurrency"
                             disabled
                             {...register("debitCurrency", {
                                 required: true
@@ -127,10 +123,10 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
 
                     <div className="container-fluid p-0 d-flex align-items-center">
                         <div className="form-floating position-relative w-100">
-                            <input 
+                            <input
                                 type="number"
-                                className={`form-control ${errors.amount ? 'is-invalid' : ''}`} 
-                                id="amount" 
+                                className={`form-control ${errors.amount ? 'is-invalid' : ''}`}
+                                id="amount"
                                 {...register("amount", {
                                     required: {
                                         value: true,
@@ -139,14 +135,14 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                 })}
                             />
                             <label htmlFor="amount">Amount *</label>
-                            {errors?.amount?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Amount'})}</div> }
+                            {errors?.amount?.type === 'required' && <div className="invalid-feedback">{t('Required', { field: 'Amount' })}</div>}
                         </div>
                     </div>
 
                     <div className="form-floating">
                         <select
-                            className={`form-control ${errors.creditCurrency ? 'is-invalid' : ''}`} 
-                            id="creditCurrency" 
+                            className={`form-control ${errors.creditCurrency ? 'is-invalid' : ''}`}
+                            id="creditCurrency"
                             {...register("creditCurrency", {
                                 required: {
                                     value: true,
@@ -154,17 +150,16 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                 },
                             })}
                         >
-                            <option value=''>
-                                Select a currency
-                            </option>
-                            { currencies && currencies.map((currency) => (
+                            <option value=''>Select a currency</option>
+                            {currencies && currencies.map((currency) => (
+                                currency !== watch('debitCurrency') &&
                                 <option key={currency.name} value={currency.name}>
                                     {currency.name}
                                 </option>
-                            )) }
+                            ))}
                         </select>
                         <label htmlFor="creditCurrency">Select Credit Currency *</label>
-                        {errors?.creditCurrency?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Credit Currency'})}</div> }
+                        {errors?.creditCurrency?.type === 'required' && <div className="invalid-feedback">{t('Required', { field: 'Credit Currency' })}</div>}
                     </div>
 
                     <div className="container-fluid p-0 d-flex align-items-center">
@@ -178,17 +173,20 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                         value: true,
                                         message: 'required',
                                     },
-                                    maxLength: 35
+                                    maxLength: 35,
+                                    validate: (value) => value !== debitAccount
                                 })}
                             />
+
                             <label htmlFor="creditAccount">Credit Account</label>
                             {errors?.creditAccount?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Credit Account'})}</div> }
                             {errors?.creditAccount?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
+                            {errors?.creditAccount?.type === 'validate' && <div className="invalid-feedback">{t('EqualTransactionAccount')}</div>}
 
                             <label htmlFor="creditAccount">Credit Account *</label>
                         </div>
                     </div>
-
+                    
                     { amount && debitCurrency && creditCurrency && debitCurrency !== creditCurrency ?
                         <div>
                             <div className="container-fluid p-0 d-flex align-items-center">
@@ -197,10 +195,10 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                         type="text"
                                         className={`form-control`}
                                         id="conversionRate"
+                                        disabled
                                         value={
                                             formatNumberNoOptions(userData?.preferredLanguage, conversionRate)
                                         }
-                                        disabled
                                         {...register("conversionRate", {
                                             required: true
                                         })}
@@ -220,7 +218,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                                         }
                                         disabled
                                         {...register("conversionAmount", {
-                                            required: false
+                                            required: true
                                         })}
                                     />
                                     <label htmlFor="conversionAmount">FX Amount</label>
@@ -232,59 +230,26 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
 
                     <div className="container-fluid p-0 d-flex align-items-center">
                         <div className="form-floating position-relative w-100">
-                            <input 
+                            <input
                                 type="text"
-                                className={`form-control ${errors.bankName ? 'is-invalid' : ''}`} 
-                                id="bankName" 
-                                {...register("bankName", {
-                                    required: true,
-                                    maxLength: 35
-                                })}
-                            />
-                            <label htmlFor="bankName">Bank Name *</label>
-                            {errors?.bankName?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Bank Name'})}</div> }
-                            {errors?.bankName?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
-                        </div>
-                    </div>
-
-                    <div className="container-fluid p-0 d-flex align-items-center">
-                        <div className="form-floating position-relative w-100">
-                            <input 
-                                type="text"
-                                className={`form-control ${errors.accountHolderName ? 'is-invalid' : ''}`} 
-                                id="accountHolderName" 
-                                {...register("accountHolderName", {
-                                    required: true,
-                                    maxLength: 35
-                                })}
-                            />
-                            <label htmlFor="accountHolderName">Account Holder Name *</label>
-                            {errors?.accountHolderName?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Account Holder Name'})}</div> }
-                            {errors?.accountHolderName?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
-                        </div>
-                    </div>
-
-                    <div className="container-fluid p-0 d-flex align-items-center">
-                        <div className="form-floating position-relative w-100">
-                            <input 
-                                type="text"
-                                className={`form-control ${errors.notes ? 'is-invalid' : ''}`} 
-                                id="notes" 
+                                className={`form-control ${errors.notes ? 'is-invalid' : ''}`}
+                                id="notes"
                                 {...register("notes", {
                                     required: false,
                                     maxLength: 35
                                 })}
                             />
                             <label htmlFor="notes">Notes</label>
-                            {errors?.notes?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
+                            {errors?.notes?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', { value: '35' })}</div>}
                         </div>
                     </div>
 
-                    <button 
+                    <button
                         className="btn btn-primary py-2 mt-3 w-100"
                         type="submit"
                         disabled={conversionRate === undefined && conversionAmount === undefined}
                     >
+                        
                         Send Money
                     </button>
                 </form>
@@ -293,15 +258,13 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
     )
 }
 
-const mapStateToProps: MapStateToProps<InterBankTransferStateProps, InterBankTransferOwnProps, RootState> = createStructuredSelector({
+const mapStateToProps: MapStateToProps<IntraBankTransferStateProps, IntraBankTransferOwnProps, RootState> = createStructuredSelector({
     currencies: selectConfigCurrencies
 });
 
-const mapDispatchToProps : MapDispatchToPropsFunction<InterBankTransferDispatchProps, InterBankTransferOwnProps> = (dispatch: Dispatch) => ({
-    accountTransferStart: (payload: InterBankTransferRequest, navigate : NavigateFunction) => dispatch(accountTransferStart(payload, navigate)),
+const mapDispatchToProps: MapDispatchToPropsFunction<IntraBankTransferDispatchProps, IntraBankTransferOwnProps> = (dispatch: Dispatch) => ({
+    accountTransferStart: (payload: IntraBankTransferRequest, navigate : NavigateFunction) => dispatch(accountTransferStart(payload, navigate)),
     fetchExchangeRateStart: (payload: FetchExchangeRateRequest) => dispatch(fetchExchangeRateStart(payload))
 });
 
-
-  
-export default connect(mapStateToProps, mapDispatchToProps)(InterBankTransfer);
+export default connect(mapStateToProps, mapDispatchToProps)(OwnAccountTransfer);
