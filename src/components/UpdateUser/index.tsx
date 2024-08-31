@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Dispatch } from 'redux';
-import { useTranslation } from 'react-i18next';
 import { UpdateUserDispatchProps, UpdateUserOwnProps, UpdateUserProps, UpdateUserRequest } from './interface';
 import { useForm } from 'react-hook-form';
 import { setShowModal, updateUserStart } from "../../redux/user/user.actions";
@@ -13,9 +12,9 @@ import ErrorHandler from '../ErrorHandler';
 import SuccessHandler from "../SuccessHandler";
 import './style.scss';
 import { profilePage, titles } from "../../pages/route";
+import FormError from "../FormError";
 
 const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, updateUserStart }) => {
-    const { t } = useTranslation();
     const navigate = useNavigateContext();
 
     useEffect(() => {
@@ -27,7 +26,7 @@ const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, update
         }
     }, [userData]);
 
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
         mode: 'all',
         criteriaMode: 'all',
         shouldFocusError: true
@@ -81,15 +80,14 @@ const UpdateUser : React.FC<UpdateUserProps> = ({ userData, setShowModal, update
                                 })}
                             />
                             <label htmlFor="name">Name *</label>
-                            {errors?.name?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Name'})}</div> }
-                            {errors?.name?.type === 'maxLength' && <div className="invalid-feedback">{t('maxLength', {value: '35'})}</div>}
-                            {errors?.name?.type === 'validate' && <div className="invalid-feedback">{t('NoChange', {field: 'Name'})}</div>}
+                            <FormError errors={errors} value="35" fieldName="name" field="Name" />
                         </div>
                     </div>
                     
                     <button 
                         className="btn btn-primary py-2 mt-3 w-100"
                         type="submit"
+                        disabled={!isValid}
                     >
                         Submit
                     </button>

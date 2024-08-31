@@ -20,11 +20,17 @@ const FormError: React.FC<FormErrorProps> = ({ errors, fieldName, field, value }
     errorMessages.push(t('maxLength', { value }));
   }
 
-  if (fieldError.type === 'validate' && fieldName === "creditAccount") {
-    errorMessages.push(t('EqualTransactionAccount'));
+  if (fieldError.type === 'validate') {
+    if(fieldName === "creditAccount"){
+      errorMessages.push(t('EqualTransactionAccount'));
+    }else if(fieldName === "name"){
+      errorMessages.push(t('NoChange', {field: 'Name'}));
+    }else if(fieldName === "confirmPassword"){
+      errorMessages.push(t('PasswordsDoNotMatch'));
+    } 
   }
 
-  if (fieldError.type === 'custom') {
+  if (fieldError.type === 'custom' || fieldError.type === 'pattern') {
     errorMessages.push(fieldError.message?.toString());
   }
 

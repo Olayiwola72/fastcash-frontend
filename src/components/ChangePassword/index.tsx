@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Dispatch } from 'redux';
-import { useTranslation } from 'react-i18next';
 import { ChangePasswordProps, ChangePasswordOwnProps, ChangePasswordDispatchProps, ChangePasswordRequest } from './interface';
 import { useForm } from 'react-hook-form';
 import { getPasswordRegex } from "../../utils/passwordRegex";
@@ -11,8 +10,10 @@ import { NavigateFunction } from "react-router-dom";
 import { useNavigateContext } from "../NavigateProvider";
 import ErrorHandler from '../ErrorHandler';
 import TogglePassword from "../TogglePassword";
-import './style.scss';
 import { changePasswordPage, titles } from "../../pages/route";
+import { useTranslation } from "react-i18next";
+import FormError from "../FormError";
+import './style.scss';
 
 const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswordStart }) => {
     const { t } = useTranslation();
@@ -26,7 +27,7 @@ const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswo
         }
     }, [userData]);
 
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
         mode: 'all',
         criteriaMode: 'all',
         shouldFocusError: true
@@ -91,14 +92,16 @@ const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswo
                                             value: true,
                                             message: 'required',
                                         },
-                                        pattern: getPasswordRegex(),
+                                        pattern: {
+                                            value: getPasswordRegex(),
+                                            message: t('InvalidPassword')
+                                        },
                                     })}
                                 />
                                 <label htmlFor="password">Password *</label>
-                                {errors?.password?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Password'})}</div> }
-                                {errors?.password?.type === 'pattern' && <div className="invalid-feedback">{t('InvalidPassword')}</div> }
 
                                 <TogglePassword showPassword={showPassword} toggleShowPassword={toggleShowPassword} errorMessage={errors.password?.message} />
+                                <FormError errors={errors} fieldName="password" field="Password" />
                             </div>
                         </div>
 
@@ -120,11 +123,9 @@ const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswo
                                         validate: (value) => value === password
                                     })}
                                 />
-                                <label htmlFor="confirmPassword">Confirm Password *</label>
-                                {errors?.confirmPassword?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Confirm Password'})}</div> }
-                                {errors?.confirmPassword?.type === 'validate' && <div className="invalid-feedback">{t('PasswordsDoNotMatch')}</div> }
-                                
+                                <label htmlFor="confirmPassword">Confirm Password *</label>   
                                 <TogglePassword showPassword={showConfirmPassword} toggleShowPassword={toggleShowConfirmPassword} errorMessage={errors.confirmPassword?.message} />
+                                <FormError errors={errors} fieldName="confirmPassword" field="Confirm Password" />
                             </div>
                         </div>
                     </div>
@@ -132,6 +133,7 @@ const ChangePassword : React.FC<ChangePasswordProps> = ({ userData, changePasswo
                     <button 
                         className="btn btn-primary py-2 mt-3 w-100"
                         type="submit"
+                        disabled={!isValid}
                     >
                         Submit
                     </button>
