@@ -26,7 +26,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
     const { search, pathname } = useLocation();
     const navigate = useNavigateContext();
 
-    const {register, handleSubmit, watch, setValue, setError, formState: { errors, isValid } } = useForm({
+    const {register, handleSubmit, watch, setValue, setError, formState: { errors } } = useForm({
         mode: 'all',
         criteriaMode: 'all',
         shouldFocusError: true
@@ -295,8 +295,7 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                         className="btn btn-md btn-primary py-2 mt-3 w-100"
                         type="submit"
                         disabled={
-                            !isValid
-                            || conversionRate === undefined 
+                            conversionRate === undefined 
                             || conversionAmount === undefined
                         }
                     >
