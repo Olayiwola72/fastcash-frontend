@@ -18,7 +18,7 @@ export const titles: { [key: string]: string } = {
     [interTransferPage]: 'External Bank Transfer',
     [transactionsPage]: 'Recent Transactions',
     [transactionsHistoryPage]: 'Transaction History',
-    [accountsPage]: 'Accounts',
+    [accountsPage]: 'Wallets',
     [profilePage]: 'Update Profile',
     [changePasswordPage]: 'Change Password',
     [resetPasswordPage]: 'Reset Password',
