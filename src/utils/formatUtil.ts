@@ -14,12 +14,30 @@ export const formatNumber = (preferredLanguage: string, style: 'currency' | 'dec
     currency: currency,
   }
 
-  return new Intl.NumberFormat(preferredLanguage || DEFAULT_LOCALE, options).format(value);
+  try {
+    return new Intl.NumberFormat(preferredLanguage || DEFAULT_LOCALE, options).format(value);
+  } catch (error) {
+    if (error instanceof RangeError) {
+      console.error(`Locale '${preferredLanguage}' caused an error. Falling back to default locale.`);
+      return new Intl.NumberFormat(DEFAULT_LOCALE, options).format(value);
+    } else {
+      throw error;
+    }
+  }
 }
 
 export const formatNumberNoOptions = (preferredLanguage: string | undefined, value: number): string | number => {
-  return value ? 
-    new Intl.NumberFormat(preferredLanguage || DEFAULT_LOCALE).format(value) 
-    : 
-    value;
+  try {
+    return value ? 
+      new Intl.NumberFormat(preferredLanguage || DEFAULT_LOCALE).format(value) 
+      : 
+      value;
+  } catch (error) {
+    if (error instanceof RangeError) {
+      console.error(`Locale '${preferredLanguage}' caused an error. Falling back to default locale.`);
+      return new Intl.NumberFormat(DEFAULT_LOCALE).format(value);
+    } else {
+      throw error;
+    }
+  }
 }
