@@ -4,60 +4,64 @@ import { connect, MapStateToProps, MapDispatchToPropsFunction } from 'react-redu
 import { Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
-import { selectUserData } from '../../redux/user/user.selectors'
+import { selectUserData } from '../../redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
 import { indexPage, profilePage } from '../../pages/route';
-import { signOutStart } from '../../redux/user/user.actions'
+import { signOutStart } from '../../redux/user/user.actions';
 import './style.scss';
 import Logo from "../Logo";
 
-const Header : React.FC<HeaderProps> = ({ userData, signOutStart }) => {
+const Header: React.FC<HeaderProps> = ({ userData, signOutStart }) => {
     return (
-        <header className="text-bg-dark">
-            <div className="container header p-1">
-                <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-
-                    <Logo width="50px" className="d-flex align-items-center mb-lg-0" />
-
-                    <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <Link to={indexPage} className="nav-link px-2 text-white">Home</Link>
-                    </ul>
-
-                    { userData ? 
-                        <div className="dropdown text-end">
-                            
-                            <Link to="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img 
-                                    src={ userData.pictureUrl ? userData.pictureUrl : '' }
-                                    alt="mdo" width="32" height="32" 
-                                    className="rounded-circle img-fluid" 
-                                />
-                            </Link>
-                            
-                            <ul className="dropdown-menu text-small">
-                                <li>
-                                    <Link to={profilePage} className="dropdown-item">Update Profile</Link>
-                                </li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <Link to={indexPage} className="dropdown-item" onClick={() => signOutStart()} >Sign out</Link>
+        <header className="bg-dark text-white">
+            <div className="container-fluid">
+                <nav className="navbar navbar-expand-lg navbar-dark">
+                    <div className="container">
+                        <Link className="navbar-brand" to={indexPage}>
+                            <Logo width="50px" className="d-inline-block align-text-top" />
+                        </Link>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarNav">
+                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li className="nav-item">
+                                    <Link to={indexPage} className="nav-link">Home</Link>
                                 </li>
                             </ul>
+                            {userData && (
+                                <div className="d-flex align-items-center ms-auto">
+                                    <div className="dropdown">
+                                        <Link className="d-block link-body-emphasis text-decoration-none dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img 
+                                                src={userData.pictureUrl || ''} 
+                                                alt="User" 
+                                                width="32" 
+                                                height="32" 
+                                                className="rounded-circle" 
+                                            />
+                                        </Link>
+                                        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><Link to={profilePage} className="dropdown-item">Update Profile</Link></li>
+                                            <li><hr className="dropdown-divider" /></li>
+                                            <li><Link to={indexPage} className="dropdown-item" onClick={() => signOutStart()}>Sign out</Link></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        : 
-                        ''
-                    }
-                </div>
+                    </div>
+                </nav>
             </div>
         </header>
-    )
+    );
 }
 
 const mapStateToProps: MapStateToProps<HeaderStateProps, HeaderOwnProps, RootState> = createStructuredSelector({
     userData: selectUserData,
 });
 
-const mapDispatchToProps : MapDispatchToPropsFunction<HeaderDispatchProps, HeaderOwnProps> = (dispatch: Dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<HeaderDispatchProps, HeaderOwnProps> = (dispatch: Dispatch) => ({
     signOutStart: () => dispatch(signOutStart())
 });
 
