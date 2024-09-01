@@ -263,7 +263,7 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
                     </div>
 
                     <button
-                        className="btn btn-primary py-2 mt-3 w-100"
+                        className="btn btn-md btn-primary py-2 mt-3 w-100"
                         type="submit"
                         disabled={
                             !isValid

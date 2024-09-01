@@ -7,7 +7,7 @@ import { setShowModal } from "../../redux/user/user.actions";
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Account } from "../../redux/user/interface";
-import { interTransferPage, ownAccountTransferPage } from "../../pages/route";
+import { interTransferPage, intraTransferPage, ownAccountTransferPage, titles } from "../../pages/route";
 import { formatNumber } from "../../utils/formatUtil";
 import { getPreferredLanguage } from "../../utils/languageUtil";
 
@@ -21,7 +21,7 @@ const AccountFeatures: React.FC<AccountFeaturesProps> = ({ accounts, setShowModa
 
     const navigate = useNavigate();
 
-    const handleNavigtion = (event: React.MouseEvent<HTMLButtonElement>, account: Account, page: string) => {
+    const handleNavigtion = (event: React.MouseEvent<HTMLAnchorElement>, account: Account, page: string) => {
         event.preventDefault();
         setCurrentAccount(account);
         navigate(`${page}?account=${account.accountNumber}&currency=${account.currency}`);
@@ -56,14 +56,29 @@ const AccountFeatures: React.FC<AccountFeaturesProps> = ({ accounts, setShowModa
                                         {account.allowOverdraft ? "Disable" : "Enable"} Overdraft
                                     </Link>
                                 </div>
-                                <div className="d-flex justify-content-between">
-                                    <button type="button" className="btn btn-primary w-100 me-2 rounded-pill" onClick={(event) => handleNavigtion(event, account, ownAccountTransferPage)}>
-                                        Account Transfer
-                                    </button>
-                                    <button type="button" className="btn btn-success w-100 rounded-pill" onClick={(event) => handleNavigtion(event, account, interTransferPage)}>
-                                        Inter Bank Transfer
-                                    </button>
-                                </div>
+                                <ul className="list-group list-group-flush">
+                                    <li className="list-group-item p-0">
+                                        <Link to="#" onClick={(event) => handleNavigtion(event, account, ownAccountTransferPage)} 
+                                           className="d-block p-2 text-white text-center bg-success rounded text-decoration-none">
+                                            <i className="fa fa-exchange"></i>
+                                            <span className="ms-2">{titles[ownAccountTransferPage]}</span>
+                                        </Link>
+                                    </li>
+                                    <li className="list-group-item p-0">
+                                        <Link to="#" onClick={(event) => handleNavigtion(event, account, intraTransferPage)} 
+                                           className="d-block p-2 text-white text-center bg-primary rounded mt-2 text-decoration-none">
+                                            <i className="fa fa-users"></i>
+                                            <span className="ms-2">{titles[intraTransferPage]}</span>
+                                        </Link>
+                                    </li>
+                                    <li className="list-group-item p-0">
+                                        <Link to="#" onClick={(event) => handleNavigtion(event, account, interTransferPage)} 
+                                           className="d-block p-2 text-white text-center bg-warning rounded mt-2 text-decoration-none">
+                                            <i className="fa fa-university"></i>
+                                            <span className="ms-2">{titles[interTransferPage]}</span>
+                                        </Link>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

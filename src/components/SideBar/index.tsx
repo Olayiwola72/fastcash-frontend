@@ -16,8 +16,8 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
   }
 
   return (
-    <div className="side-bar col-md-3 col-lg-2 border h-100">
-      <div className="m-3">
+    <div className="side-bar col-md-3 col-lg-2 border h-100 p-3">
+      <div className="">
       <Logo width="50px" className="fs-5 fw-semibold text-success d-flex align-items-center mb-2 link-body-emphasis text-decoration-none border-bottom">
         {APP_NAME}
       </Logo>
@@ -54,17 +54,26 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <Link to={ownAccountTransferPage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
-                  {titles[ownAccountTransferPage]}
+                  <span>
+                    <i className="fa fa-exchange bi pe-none me-2"></i>
+                    {titles[ownAccountTransferPage]}
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link to={intraTransferPage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
-                  {titles[intraTransferPage]}
+                  <span>
+                    <i className="fa fa-users bi pe-none me-2"></i>
+                    {titles[intraTransferPage]}
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link to={interTransferPage} className="link-body-emphasis d-inline-flex text-decoration-none rounded" onClick={() => clearMessages()}>
-                  {titles[interTransferPage]}
+                  <span>
+                    <i className="fa fa-university bi pe-none me-2"></i>
+                    {titles[interTransferPage]}
+                  </span>
                 </Link>
               </li>
             </ul>

@@ -146,7 +146,7 @@ export function* fetchExchangeRateSaga(action : FetchExchangeRateStartAction){
     };
 
     try {
-        const { data } = yield call(callApiWithRefreshToken, axiosInstance, config);
+        const { data } = yield call(callApiWithRefreshToken, axiosNoInterceptor, config);
         
         if(data && data.result === 'success'){
             setValue('conversionRate', data.conversion_rate);

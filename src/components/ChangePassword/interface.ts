@@ -7,7 +7,7 @@ export interface ChangePasswordRequest {
 
 export interface ChangePasswordOwnProps {
     children?: React.ReactNode;
-    userData : User | undefined
+    userData : User | undefined;
 }
 
 export interface ChangePasswordStateProps {

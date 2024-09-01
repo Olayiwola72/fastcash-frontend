@@ -4,7 +4,7 @@ export interface RecentTransactionsOwnProps {
     children?: React.ReactNode;
     transfers: MoneyTransfer[];
     userData: User | undefined; 
-    accounts : Account[]
+    accounts : Account[];
 }
 
 export interface RecentTransactionsStateProps {

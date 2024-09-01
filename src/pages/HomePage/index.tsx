@@ -1,10 +1,11 @@
-import React, { useEffect, useCallback, lazy, Suspense } from "react";
+import React, { useEffect, useCallback, lazy, Suspense, useRef } from "react";
 import { HomeProps } from './interface';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ownAccountTransferPage, interTransferPage, transactionsPage, transactionsHistoryPage, accountsPage, profilePage, changePasswordPage, indexPage, intraTransferPage } from '../route';
 import SideBar from "../../components/SideBar";
 import './style.scss';
 import PreLoader from "../../components/PreLoader";
+import { scrollToRef } from "../../utils/focusHandlingUtil";
 
 // Lazy-loaded components
 const DashboardComponent = lazy(() => import('../../components/DashboardComponent'));
@@ -19,6 +20,7 @@ const ChangePassword = lazy(() => import('../../components/ChangePassword'));
 
 const HomePage: React.FC<HomeProps> = ({ userData }) => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     const handleRedirect = useCallback(() => {
         if (!userData) {
@@ -30,10 +32,12 @@ const HomePage: React.FC<HomeProps> = ({ userData }) => {
         handleRedirect();
     }, [handleRedirect]);
 
+    const ref = useRef<HTMLDivElement>(null);
+    scrollToRef(ref)
+
     const accountStatements = userData?.accountStatements ?? [];
     const transfers = userData?.transfers ?? [];
     const accounts = userData?.accounts ?? [];
-    const { pathname } = useLocation();
 
     const renderContent = () => {
         switch (pathname) {
@@ -64,7 +68,7 @@ const HomePage: React.FC<HomeProps> = ({ userData }) => {
             <div className="row">
                 <SideBar />
                 
-                <main className="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+                <main className="col-md-9 ms-sm-auto col-lg-10 px-md-5" ref={ref}>
                     <Suspense fallback={<PreLoader isLoading={true} />}>
                         {renderContent()}
                     </Suspense>
