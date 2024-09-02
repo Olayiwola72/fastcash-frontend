@@ -83,6 +83,7 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
             selector: row => row.creditAccount.accountNumber,
             sortable: true,
             right: true,
+            allowOverflow: true
         },
         {
             name: 'Credit Amount',
