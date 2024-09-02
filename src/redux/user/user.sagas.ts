@@ -237,6 +237,7 @@ export function* signOutSaga(){
         toast.success(i18n.t('SignedOutSuccess'));
 
         sessionStorage.removeItem("form-own-account");
+        sessionStorage.removeItem("form-account-to-account");
         sessionStorage.removeItem("form-inter-bank");
         sessionStorage.removeItem("form-change-password");
         sessionStorage.removeItem("form-account-settings");
@@ -281,6 +282,7 @@ export function* createTransferSaga(action : AccountTransferStartAction){
             })
 
             sessionStorage.removeItem("form-own-account");
+            sessionStorage.removeItem("form-account-to-account");
             sessionStorage.removeItem("form-inter-bank");
         }        
     } catch (error) {

@@ -32,7 +32,7 @@ const OwnAccountTransfer: React.FC<IntraBankTransferProps> = ({ accounts, userDa
         shouldFocusError: true
     });
     
-    useFormPersist("form-own-account", { watch, setValue });
+    useFormPersist("form-account-to-account", { watch, setValue });
 
     useEffect(() => {
         const params = new URLSearchParams(search);
