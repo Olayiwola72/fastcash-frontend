@@ -15,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({ userData, signOutStart }) => {
     return (
         <header className="bg-dark text-white">
             <div className="container-fluid">
-                <nav className="navbar navbar-expand-lg navbar-dark">
+                <nav className="navbar navbar-expand-lg navbar-dark p-0">
                     <div className="container">
                         <Link className="navbar-brand" to={indexPage}>
                             <Logo width="50px" className="d-inline-block align-text-top" />

@@ -4,7 +4,7 @@ import { RootState } from '../../redux/store';
 import { selectIsFetchingState } from '../../redux/user/user.selectors'
 import { createStructuredSelector } from 'reselect'
 import { connect, MapStateToProps } from 'react-redux';
-import { Watch } from 'react-loader-spinner';
+import ClipLoader from "react-spinners/ClipLoader";
 import './style.scss';
 import { scrollToRef } from "../../utils/focusHandlingUtil";
 
@@ -14,16 +14,16 @@ const PreLoader : React.FC<PreLoaderProps> = ({ isFetching, isLoading, className
 
   return (
     <div className={`preloader-container ${className}`} ref={ref}>
-      <Watch
-        visible={isFetching || isLoading}
-        height="80"
-        width="80"
-        radius="48"
-        color="black"
-        ariaLabel="watch-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
+     
+      <ClipLoader
+        color={"#000000"}
+        loading={isFetching || isLoading}
+        size={55}
+        speedMultiplier={1}
+        aria-label="Loading Spinner"
+        data-testid="loader"
       />
+      
     </div>
   );  
 }
