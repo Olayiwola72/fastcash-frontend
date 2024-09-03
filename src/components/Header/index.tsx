@@ -15,10 +15,10 @@ const Header: React.FC<HeaderProps> = ({ userData, signOutStart, removeErrorMess
     return (
         <header className="bg-dark text-white">
             <div className="container-fluid">
-                <nav className="navbar navbar-expand-lg navbar-dark p-0">
+                <nav className="navbar navbar-expand-lg navbar-dark">
                     <div className="container">
                         <Link className="navbar-brand" to={indexPage}>
-                            <Logo width="50px" className="d-inline-block align-text-top" />
+                            <Logo width="45px" className="d-inline-block" />
                         </Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
@@ -35,12 +35,13 @@ const Header: React.FC<HeaderProps> = ({ userData, signOutStart, removeErrorMess
                                     </Link>
                                 </li>
                             </ul>
-                            {userData && (
+
+                            { userData && (
                                 <div className="d-flex align-items-center ms-auto">
                                     <div className="dropdown">
                                         <Link className="d-block link-body-emphasis text-decoration-none dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <img 
-                                                src={userData.pictureUrl || ''} 
+                                                src={userData?.pictureUrl || ''} 
                                                 alt="User" 
                                                 width="32" 
                                                 height="32" 

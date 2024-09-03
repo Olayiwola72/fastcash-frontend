@@ -11,7 +11,7 @@ import { removeErrorMessage } from "../../redux/user/user.actions";
 
 const Logo : React.FC<LogoProps> = ({ width, children, className, removeErrorMessage }) => {
     return (
-        <Link to={indexPage} className={`p-2 ${className}`} aria-label={`${APP_NAME} logo`} onClick={() => removeErrorMessage()}>
+        <Link to={indexPage} className={`${className}`} aria-label={`${APP_NAME} logo`} onClick={() => removeErrorMessage()}>
             <img 
                 role="presentation"
                 className="img-fluid" 

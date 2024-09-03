@@ -16,9 +16,9 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
   }
 
   return (
-    <div className="side-bar col-md-3 col-lg-2 border h-100 p-3">
+    <div className="side-bar col-md-3 col-lg-2 border h-100">
       <div className="">
-      <Logo width="50px" className="fs-5 fw-semibold text-success d-flex align-items-center mb-2 link-body-emphasis text-decoration-none border-bottom">
+      <Logo width="50px" className="mt-3 py-2 fs-5 fw-semibold text-success d-flex align-items-center mb-2 link-body-emphasis text-decoration-none border-bottom">
         {APP_NAME}
       </Logo>
       <ul className="list-unstyled ps-0">
@@ -90,7 +90,7 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
         <li className="border-top my-3"></li>
         <li className="mb-1">
           <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-            Account
+            Profile Settings
           </button>
           <div className="collapse" id="account-collapse">
             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -108,7 +108,7 @@ const SideBar : React.FC<SideBarProps> = ({ signOutStart, removeSuccessMessage, 
           </div>
         </li>
         <li className="border-top my-3"></li>
-        <li className="mb-1">
+        <li className="">
           <button className="btn d-inline-flex align-items-center rounded border-0 collapsed">
             <Link to={indexPage} className="nav-link link-body-emphasis" onClick={() => signOutStart()}>
               <i className="fa fa-sign-out bi pe-none me-2" aria-hidden="true"></i>
