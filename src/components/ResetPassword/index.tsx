@@ -10,6 +10,8 @@ import './style.scss';
 import { getPasswordRegex } from "../../utils/passwordRegex";
 import { useNavigateContext } from "../NavigateProvider";
 import { NavigateFunction } from "react-router-dom";
+import { resetPasswordPage, titles } from "../../pages/route";
+import FormError from "../FormError";
 
 const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, resetPasswordStart }) => {
     const { t } = useTranslation();
@@ -27,9 +29,7 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
         tokenFromUrl && setToken(tokenFromUrl);
     }, [currentUrl, setToken]);
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
-        mode: 'all'
-    });
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const password = watch("password");
 
@@ -49,7 +49,9 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
                 <ErrorHandler className="mb-4"/>
 
                 <form onSubmit={handleSubmit((data) => onSubmit(data as PasswordRequest))}>
-                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">Reset Password</h1>
+                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">
+                        {titles[resetPasswordPage]}
+                    </h1>
 
                     { !token ?
                         <div className="form-floating">
@@ -66,13 +68,12 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
                                     pattern: {
                                         value:
                                         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        message: "Invalid email address",
+                                        message: t('InvalidEmail'),
                                     },
                                 })}
                             />
                             <label htmlFor="email">Email *</label>
-                            {errors?.email?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Email'})}</div> }
-                            {errors?.email?.type === 'pattern' && <div className="invalid-feedback">{t('InvalidEmail')}</div> }
+                            <FormError errors={errors} fieldName="email" field="Email" />
                         </div>
                     :
                         <div>
@@ -87,12 +88,14 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
                                                 value: true,
                                                 message: 'required',
                                             },
-                                            pattern: getPasswordRegex(),
+                                            pattern: {
+                                                value: getPasswordRegex(),
+                                                message: t('InvalidPassword')
+                                            },
                                         })}
                                     />
                                     <label htmlFor="password">Password *</label>
-                                    {errors?.password?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Password'})}</div> }
-                                    {errors?.password?.type === 'pattern' && <div className="invalid-feedback">{t('InvalidPassword')}</div> }
+                                    <FormError errors={errors} fieldName="password" field="Password" />
                                 </div>
                             </div>
 
@@ -111,8 +114,7 @@ const RecentPassword : React.FC<ResetPasswordProps> = ({ forgotPasswordStart, re
                                         })}
                                     />
                                     <label htmlFor="confirmPassword">Confirm Password *</label>
-                                    {errors?.confirmPassword?.type === 'required' && <div className="invalid-feedback">{t('Required', {field: 'Confirm Password'})}</div> }
-                                    {errors?.confirmPassword?.type === 'validate' && <div className="invalid-feedback">{t('PasswordsDoNotMatch')}</div> }
+                                    <FormError errors={errors} fieldName="confirmPassword" field="Confirm Password" />
                                 </div>
                             </div>
                         </div>

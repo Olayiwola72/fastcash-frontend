@@ -106,7 +106,10 @@ const OwnAccountTransfer: React.FC<OwnAccountTransferProps> = ({ accounts, userD
                 <ErrorHandler className="mb-4" />
                 
                 <form onSubmit={handleSubmit((data) => onSubmit(data as OwnAccountTransferRequest))}>
-                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">{titles[pathname]}</h1>
+                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">
+                        <i className="fa fa-exchange bi pe-none me-2"></i>
+                        {titles[pathname]}
+                    </h1>
                     
                     {
                         debitAccount ? 

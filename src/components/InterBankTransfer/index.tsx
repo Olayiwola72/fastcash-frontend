@@ -96,7 +96,10 @@ const InterBankTransfer : React.FC<InterBankTransferProps> = ({ accounts, userDa
                 <ErrorHandler className="mb-4"/>
                 
                 <form onSubmit={handleSubmit((data) => onSubmit(data as InterBankTransferRequest))}>
-                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">{titles[pathname]}</h1>
+                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">
+                        <i className="fa fa-university bi pe-none me-2"></i>
+                        {titles[pathname]}
+                    </h1>
 
                     {
                         debitAccount ? 

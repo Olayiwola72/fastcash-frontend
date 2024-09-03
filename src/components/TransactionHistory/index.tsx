@@ -80,6 +80,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ accountStatemen
                 )}`,
             sortable: true,
             right: true,
+            allowOverflow: true
         },
         {
             name: 'Charge Amount',
@@ -87,6 +88,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ accountStatemen
                 formatNumber(getPreferredLanguage(userData), 'currency', row.debitCurrency, row.chargeAmount),
             sortable: true,
             right: true,
+            allowOverflow: true
         },
     ];
 

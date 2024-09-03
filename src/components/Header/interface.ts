@@ -10,6 +10,7 @@ export interface HeaderStateProps {
 
 export interface HeaderDispatchProps {
     signOutStart: () => void;
+    removeErrorMessage: () => void;
 }
 
 export type HeaderProps = HeaderOwnProps & HeaderStateProps & HeaderDispatchProps;

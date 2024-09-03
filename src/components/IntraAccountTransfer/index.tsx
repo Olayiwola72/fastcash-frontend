@@ -101,7 +101,10 @@ const OwnAccountTransfer: React.FC<IntraBankTransferProps> = ({ accounts, userDa
                             onSubmit(data as IntraBankTransferRequest))
                     }
                 >
-                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">{titles[pathname]}</h1>
+                    <h1 className="h3 mt-5 mb-3 fw-normal text-center">
+                        <i className="fa fa-exchange bi pe-none me-2"></i>
+                        {titles[pathname]}
+                    </h1>
                     
                     { debitAccount ? 
                         <OverdraftAlert account={accounts.find((account) => account.accountNumber == debitAccount)}/>

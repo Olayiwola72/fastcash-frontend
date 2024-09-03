@@ -47,14 +47,15 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
             selector: row => 
                 formatNumber(getPreferredLanguage(userData), 'currency', row.debitAccount.currency, row.debitAccount.balance),
             sortable: true,
-            right: true,
             allowOverflow: true,
         },
         {
             name: 'Direction',
             selector: row => row.direction,
             sortable: true,
-            conditionalCellStyles: conditionalCellStyles
+            conditionalCellStyles: conditionalCellStyles,
+            right: true,
+            wrap: true
         },
         {
             name: 'Narration',
@@ -75,14 +76,12 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
                 ${formatNumber(getPreferredLanguage(userData), 'currency', row.debitCurrency, row.totalDebitedAmount)}
                 `,
             sortable: true,
-            right: true,
             allowOverflow: true,
         },
         {
             name: 'Credit Account',
             selector: row => row.creditAccount.accountNumber,
             sortable: true,
-            right: true,
             allowOverflow: true
         },
         {
@@ -92,8 +91,8 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
                 ${formatNumber(getPreferredLanguage(userData), 'currency', row.creditCurrency, row.totalCreditedAmount)}
                 `,
             sortable: true,
-            right: true,
-            allowOverflow: true
+            allowOverflow: true,
+            right: true
         },
         {
             name: 'Charge Amount',
@@ -102,7 +101,6 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transfers, user
                 ${formatNumber(getPreferredLanguage(userData), 'currency', row.debitCurrency, row.chargeAmount)}
                 `,
             sortable: true,
-            right: true,
             allowOverflow: true
         },
     ];

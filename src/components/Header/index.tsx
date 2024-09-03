@@ -7,11 +7,11 @@ import { RootState } from '../../redux/store';
 import { selectUserData } from '../../redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
 import { indexPage, profilePage } from '../../pages/route';
-import { signOutStart } from '../../redux/user/user.actions';
+import { removeErrorMessage, signOutStart } from '../../redux/user/user.actions';
 import './style.scss';
 import Logo from "../Logo";
 
-const Header: React.FC<HeaderProps> = ({ userData, signOutStart }) => {
+const Header: React.FC<HeaderProps> = ({ userData, signOutStart, removeErrorMessage }) => {
     return (
         <header className="bg-dark text-white">
             <div className="container-fluid">
@@ -26,7 +26,13 @@ const Header: React.FC<HeaderProps> = ({ userData, signOutStart }) => {
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <Link to={indexPage} className="nav-link">Home</Link>
+                                    <Link 
+                                        to={indexPage} 
+                                        className="nav-link"
+                                        onClick={() => removeErrorMessage()}
+                                    >
+                                        Home
+                                    </Link>
                                 </li>
                             </ul>
                             {userData && (
@@ -62,7 +68,8 @@ const mapStateToProps: MapStateToProps<HeaderStateProps, HeaderOwnProps, RootSta
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<HeaderDispatchProps, HeaderOwnProps> = (dispatch: Dispatch) => ({
-    signOutStart: () => dispatch(signOutStart())
+    signOutStart: () => dispatch(signOutStart()),
+    removeErrorMessage: () => dispatch(removeErrorMessage())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
