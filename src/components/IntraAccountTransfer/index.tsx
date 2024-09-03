@@ -102,7 +102,7 @@ const OwnAccountTransfer: React.FC<IntraBankTransferProps> = ({ accounts, userDa
                     }
                 >
                     <h1 className="h3 mt-5 mb-3 fw-normal text-center">
-                        <i className="fa fa-exchange bi pe-none me-2"></i>
+                        <i className="fa fa-users bi pe-none me-2"></i>
                         {titles[pathname]}
                     </h1>
                     
