@@ -20,7 +20,7 @@
 Fast Cash is a next-generation online bank that automates wallet creation and facilitates effortless transactions. Whether handling local or international payments, Fast Cash aims to provide users with a streamlined, secure, and user-friendly experience.
 
 ## **Demo**
-Check out the live  of Fast Cash here:
+Check out the live of Fast Cash here:
 
 <p align="center">
    <a href="https://fast-cash.onrender.com/" target="_blank">https://fast-cash.onrender.com/</a>
@@ -86,7 +86,7 @@ To set up the project locally:
    The application will be accessible at: [http://localhost:8086/](http://localhost:8086/)
 
 ## **Usage Instructions**
-Once the application is running, open your browser and navigate to <a href="https://fast-cash.onrender.com/ " target="_blank">https://fast-cash.onrender.com/ </a>. Create a user account and start exploring the features of Fast Cash.
+Once the application is running, open your browser and navigate to <a href="https://fast-cash.onrender.com/ " target="_blank">https://fast-cash.onrender.com/</a>. Create a user account and start exploring the features of Fast Cash.
 
 ## **📝 API Documentation**
 For detailed API information and testing, access the Swagger UI:
