@@ -4,13 +4,13 @@
 
 ## **🔭 Table of Contents**
 - [Project Overview](#-project-overview)
+- [Demo](#demo)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
 - [Usage Instructions](#usage-instructions)
 - [API Documentation](#-api-documentation)
 - [Features](#features)
 - [Testing](#testing)
-- [Demo](#demo)
 - [Docker Support](#docker-support)
 - [Contributing](#contributing)
 - [License](#license)
@@ -18,6 +18,22 @@
 
 ## **🌱 Project Overview**
 Fast Cash is a next-generation online bank that automates wallet creation and facilitates effortless transactions. Whether handling local or international payments, Fast Cash aims to provide users with a streamlined, secure, and user-friendly experience.
+
+## **Demo**
+Check out the live  of Fast Cash here:
+
+<p align="center">
+   <a href="https://fast-cash.onrender.com/" target="_blank">https://fast-cash.onrender.com/</a>
+</p>
+
+<p align="center">
+   <img
+      width="500"
+      height="300"
+      alt="fast cash home"
+      src="https://github.com/Olayiwola72/my-profile/blob/main/fastcash.png"
+   />
+</p>
 
 ## **💼 Tech Stack**
 ### **Front-End:**
@@ -68,7 +84,6 @@ To set up the project locally:
       ```
 
    The application will be accessible at: [http://localhost:8086/](http://localhost:8086/)
-</a>
 
 ## **Usage Instructions**
 Once the application is running, open your browser and navigate to <a href="https://fast-cash.onrender.com/ " target="_blank">https://fast-cash.onrender.com/ </a>. Create a user account and start exploring the features of Fast Cash.
@@ -107,28 +122,16 @@ To run the tests locally:
    ./mvnw test
    ```
 
-## **Demo**
-Check out the live  of Fast Cash here:
-
-<p align="center">
-   <a href="https://fast-cash.onrender.com/" target="_blank">https://fast-cash.onrender.com/</a>
-</p>
-
-<p align="center">
-   <img
-      width="500"
-      height="300"
-      alt="fast cash home"
-      src="https://github.com/Olayiwola72/my-profile/blob/main/fastcash.png"
-   />
-</p>
-
 ## **Docker Support**
 Fast Cash can be deployed using Docker and Docker Compose, which simplifies the process of setting up and running the application in a containerized environment. Follow these instructions to get the application running using Docker.
+
+<br/>
 
 🛠 Prerequisites
 - **Docker: Install Docker**
 - **Docker Compose: Install Docker Compose**
+
+<br/>
 
 🚀 Quick Start
 1. **Clone the Repository:**
@@ -144,12 +147,13 @@ Fast Cash can be deployed using Docker and Docker Compose, which simplifies the 
 
       ```sh 
       docker-compose up --build
+      ```
 
-   --build forces Docker Compose to rebuild the images. You can omit this flag if you don't need to rebuild.
+   **Note:** --build forces Docker Compose to rebuild the images. You can omit this flag if you don't need to rebuild.
 
 1. **📜 Notes:**
 
-   Adjust environment variables and ports as needed for your local development or production setup.
+   Adjust environment variables and ports as needed for your local development or production setup. The application will be accessible at: [http://localhost:8086/](http://localhost:8086/)
 
 ## **Contributing**
 Contributions to this project are welcome. Please follow the standard GitHub fork, branch, and pull request workflow. Feel free to raise issues or feature requests to enhance this project.
