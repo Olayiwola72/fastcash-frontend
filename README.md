@@ -5,13 +5,13 @@
 ## **🔭 Table of Contents**
 - [Project Overview](#-project-overview)
 - [Tech Stack](#-tech-stack)
-- [Getting Started](#getting-started)
+- [Getting Started](#-getting-started)
 - [Usage Instructions](#usage-instructions)
 - [API Documentation](#-api-documentation)
 - [Features](#features)
 - [Testing](#testing)
 - [Demo](#demo)
-- [Docker Deployment](#docker-deployment)
+- [Docker Support](#docker-support)
 - [Contributing](#contributing)
 - [License](#license)
 - [Connect With Me](#-connect-with-me)
@@ -42,29 +42,33 @@ Fast Cash is a next-generation online bank that automates wallet creation and fa
 ### **Database:**
 - **![](https://img.shields.io/badge/Code-MySQL-informational?style=flat&logo=MySQL&color=336791)**
 
-## **Getting Started**
+## **🔧 Getting Started**
 To set up the project locally:
 
-1. **✅ Clone the Repository:**
+1. **Clone the Repository:**
 
       ```sh
       git clone https://github.com/Olayiwola72/fastcash-backend
+      ```
 
-1. **✅ Submodule Initialization:**
+1. **Submodule Initialization:**
 
    The frontend code is included as a submodule within the backend repository. Navigate to src/main/resources/client to interact with the front end.
 
       ```sh 
       git submodule update --init --recursive
+      ```
 
-1. **✅ Install Dependencies and Start the Application:**
+1. **Install Dependencies and Start the Application:**
 
    The project leverages Vite & Maven to bundle both React and Spring Boot together. Use the provided script to install all dependencies and run the application.
 
       ```sh
-   ./prod.sh
+      ./prod.sh
+      ```
 
-The application will be accessible at: <a href="https://fast-cash.onrender.com/ " target="_blank">https://fast-cash.onrender.com/ </a>
+   The application will be accessible at: [http://localhost:8086/](http://localhost:8086/)
+</a>
 
 ## **Usage Instructions**
 Once the application is running, open your browser and navigate to <a href="https://fast-cash.onrender.com/ " target="_blank">https://fast-cash.onrender.com/ </a>. Create a user account and start exploring the features of Fast Cash.
@@ -101,6 +105,7 @@ To run the tests locally:
 
    ```sh
    ./mvnw test
+   ```
 
 ## **Demo**
 Check out the live  of Fast Cash here:
@@ -118,7 +123,7 @@ Check out the live  of Fast Cash here:
    />
 </p>
 
-## **Docker Deployment**
+## **Docker Support**
 Fast Cash can be deployed using Docker and Docker Compose, which simplifies the process of setting up and running the application in a containerized environment. Follow these instructions to get the application running using Docker.
 
 🛠 Prerequisites
